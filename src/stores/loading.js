@@ -16,7 +16,6 @@ export const useLoadingStore = defineStore('loading',{
   actions: {
         setResource(value) {
             this.resource = value
-            console.log(value);
         },
         setTitle(value) {
             this.title = value

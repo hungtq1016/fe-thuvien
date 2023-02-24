@@ -14,7 +14,7 @@ export default {
   methods: {
     ...mapActions(useLoadingStore,['setResource','setTitle'])
   },
-  mounted() {
+  beforeMount() {
     this.setResource(this.$route.path.split('/').slice(-1)[0]),
     this.setTitle(this.$route.meta.title)
   },

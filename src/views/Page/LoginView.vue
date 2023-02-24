@@ -139,7 +139,7 @@ export default {
         async submit() {
             const login = await axios
                 .post(`/api/login`, this.form)
-                .catch((error) => {
+                .catch(() => {
                     Swal.fire({
                         icon: "warning",
                         title: "Đăng Nhập Thất Bại",

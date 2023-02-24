@@ -25,6 +25,8 @@
 <script>
 import {XMarkIcon} from "@heroicons/vue/24/outline";
 import axios from 'axios';
+import { mapState } from "pinia";
+import {useLoadingStore} from '../../../stores/loading';
 export default {
     components:{XMarkIcon},
     props:['title','resource'],
@@ -50,12 +52,13 @@ export default {
         },
     },
     async mounted(){
-        await axios.get(`http://api.tranhung.info/api/${this.resource}?limit=all`).then((response)=>{this.resourceData = response.data})
+        await axios.get(`${this.apiURL}/api/${this.resource}?limit=all`).then((response)=>{this.resourceData = response.data})
     },
     computed:{
         selectedId(){
             return this.resourceData[this.selected]
-        }
+        },
+        ...mapState(useLoadingStore,['apiURL'])
     }
 };
 </script>

@@ -9,10 +9,10 @@
 
 <script>
 import { BuildingOfficeIcon, BookOpenIcon, TagIcon, HomeIcon, ExclamationCircleIcon, UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon } from '@heroicons/vue/24/outline'
-import { mapActions as actionPinia} from 'pinia';
+import { mapActions} from 'pinia';
 import {useLoadingStore} from '../../stores/loading';
+import {useDataStore} from '../../stores/data';
 
-import { mapActions } from 'vuex'
 export default {
     data() {
         return {
@@ -32,12 +32,12 @@ export default {
         }
     },
     methods:{
-        ...mapActions(['getDataTable']),
-        ...actionPinia(useLoadingStore,['setResource','setTitle']),
+        ...mapActions(useDataStore,['fetchDataTable']),
+        ...mapActions(useLoadingStore,['setResource','setTitle']),
         toggle(item){
-            this.getDataTable({resource:item.resource,page:1});
             this.setResource(item.resource)
             this.setTitle(item.label)
+            this.fetchDataTable();
         }
     },
 }

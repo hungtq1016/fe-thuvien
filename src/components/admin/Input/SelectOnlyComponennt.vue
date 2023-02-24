@@ -13,10 +13,10 @@
 </template>
 
 <script>
-import {XMarkIcon} from "@heroicons/vue/24/outline";
 import axios from 'axios';
+import { mapState } from "pinia";
+import {useLoadingStore} from '../../../stores/loading';
 export default {
-    components:{XMarkIcon},
     props:['title','resource','data'],
     data() {
         return {
@@ -33,7 +33,10 @@ export default {
         }
     },
     async mounted(){
-        await axios.get(`http://api.tranhung.info/api/${this.resource}?limit=all`).then((response)=>{this.resourceData = response.data})
-    }
+        await axios.get(`${this.apiURL}/api/${this.resource}?limit=all`).then((response)=>{this.resourceData = response.data})
+    },
+    computed: {
+        ...mapState(useLoadingStore,['apiURL'])
+    },
 };
 </script>

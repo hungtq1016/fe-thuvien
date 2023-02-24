@@ -55,7 +55,6 @@
 import { mapActions, mapGetters, mapMutations } from "vuex";
 import { ChevronLeftIcon, ChevronRightIcon ,ChevronDoubleRightIcon,ChevronDoubleLeftIcon} from '@heroicons/vue/20/solid'
 export default {
-    props:['data'],
     components: {ChevronLeftIcon, ChevronRightIcon,ChevronDoubleRightIcon,ChevronDoubleLeftIcon},
     data() {
         return {

@@ -20,14 +20,14 @@
                                     class="block w-full rounded-r-full border-none py-3 bg-gray-100 focus:ring-0 sm:text-sm placeholder:text-sky-600" />
                             </div>
                         </div>
-                        <EasyDataTable :headers="label" :items-selected="itemsSelected" :items="getDataFromState"
+                        <EasyDataTable :headers="label" :items-selected="itemsSelected" :items="dataTable"
                             :search-field="searchField" :search-value="searchValue" @click-row="showRow"
                             table-class-name="!border-gray-300 py-2 rounded-lg"
                             body-row-class-name="even:bg-white odd:bg-gray-100"
                             body-item-class-name="!bg-transparent max-w-sm truncate"
-                            body-expand-row-class-name="!bg-red-600" :rows-per-page="this.getMeta.per_page" hide-footer>
+                            body-expand-row-class-name="!bg-red-600" :rows-per-page="this.meta.per_page" hide-footer>
                             <template #loading>
-                                <img src="https://itc.edu.vn/Data/Sites/1/media/img/logo.png"
+                                <img :src="this.apiUrl+'/logo/logo.png'"
                                     class="animate-spin mx-auto py-6" />
                             </template>
                             <template #empty-message>
@@ -37,7 +37,7 @@
                                 <template v-if="item.image">
                                     <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-full my-1"
                                     v-if="item.image.split('/')[0]  == 'http:' || item.image.split('/')[0]  == 'https:'"/>
-                                    <img :src="this.getApiUrl+'/images/'+item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-full my-1"
+                                    <img :src="this.apiUrl+'/images/'+item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-full my-1"
                                         v-else/>
                                 </template>
                             </template>
@@ -69,7 +69,7 @@
                                 </div>
                             </template>
                         </EasyDataTable>
-                        <PaginateComponent :data="data" />
+                        <PaginateComponent/>
                     </div>
                 </div>
             </div>
@@ -78,52 +78,33 @@
 </template>
 
 <script>
-import { mapActions, mapGetters, mapMutations } from "vuex";
-import PaginateComponent from './PaginateComponent.vue';
+import PaginateComponent from './ThePagination.vue';
 import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
 import Swal from "sweetalert2";
-import {mapActions as actionPinia} from 'pinia';
+import {mapActions,mapState} from 'pinia';
 import {useLoadingStore} from '../../stores/loading';
+import {useTableStore} from '../../stores/table';
+
 export default {
     components: { PencilIcon, TrashIcon, PaginateComponent },
     data() {
         return {
-            data: {
-                name: this.$route.path.split("/").slice(-1)[0],
-                title: this.$route.meta.title,
-            },
             searchField: "name",
             searchValue: "",
-            label: [
-                { value: "id", text: "ID", sortable: true },
-                { value: "name", text: "Tên", sortable: true },
-                { value: "image", text: "Hình ảnh", sortable: true },
-                {
-                    value: "desc",
-                    text: "Thông tin",
-                    sortable: true,
-                    width: 300,
-                },
-                { value: "status", text: "Trạng thái", sortable: true },
-                { value: "operation", text: "Tùy Chỉnh" },
-            ],
+            label: [ { value: "id", text: "ID", sortable: true }, { value: "name", text: "Tên", sortable: true }, { value: "image", text: "Hình ảnh", sortable: true }, { value: "desc", text: "Thông tin", sortable: true, width: 300, }, { value: "status", text: "Trạng thái", sortable: true }, { value: "operation", text: "Tùy Chỉnh" }, ],
             itemsSelected: []
         };
     },
     mounted() {
-        this.getDataTable({ resource: this.data.name, page: 1 });
+        this.fetchDataTable(this.resource);
     },
     methods: {
-        ...actionPinia(useLoadingStore,['toggleUpdate','toggleOpen']),
+        ...mapActions(useLoadingStore,['toggleUpdate','toggleOpen']),
+        ...mapActions(useTableStore,['fetchDataTable']),
 
-        ...mapActions(["getDataTable", "destroyData", "updateStatus"]),
-        ...mapMutations(['SET_ROW','SET_UPDATE_DATA','OPEN_MODAL','SET_IS_UPDATE']),
         showRow(item) {
-            this.SET_ROW(item);
         },
         updateRow(item){
-            this.SET_UPDATE_DATA(item)
-
             this.toggleUpdate(true)
             this.toggleOpen(true)
         },
@@ -147,12 +128,10 @@ export default {
                             confirmButtonText: 'Hoàn thành',
                         }
                     )
-                    this.destroyData({ resource: this.data.name, id: item.id })
                 }
             })
         },
         updateStatusRow(item){
-            this.updateStatus({resource: this.data.name, id: item.id,status:item.status })
             Swal.fire({
                     title: 'Thành công!',
                     text: 'Đổi trạng thái thành công.',
@@ -163,7 +142,8 @@ export default {
         },
     },
     computed: {
-        ...mapGetters(["getDataFromState", "getMeta","getApiUrl"]),
+        ...mapState(useLoadingStore,['resource','apiURL']),
+        ...mapState(useTableStore,['dataTable','meta']),
     },
 };
 </script>
