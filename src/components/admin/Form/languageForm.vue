@@ -25,8 +25,10 @@
 
 <script>
 import { QueueListIcon } from "@heroicons/vue/24/outline";
-import { useLoadingStore } from "@/stores/loading";
 import { mapActions,mapState } from 'pinia'
+import { useDataStore } from "@/stores/data";
+import { useLoadingStore } from "@/stores/loading";
+
     export default {
         components:{QueueListIcon},
         data(){
@@ -40,17 +42,16 @@ import { mapActions,mapState } from 'pinia'
             submitForm(){
                 let payload = new FormData();
                 payload.append('name',this.form.name)
-                this.isUpdate ? this.putData(this.form) : this.postData(payload)
-                this.toggleOpen(false)
+                this.isUpdate ? this.patchItem(this.form) : this.postItem(payload)
             },
-        ...mapActions(useLoadingStore,['toggleOpen']),
+        ...mapActions(useDataStore,['postItem','patchItem']),
         },
         mounted() {
-            this.isUpdate ? this.form = this.getUpdateData : this.form={name:''};
+            this.isUpdate ? this.form = this.itemSelected : this.form={name:''};
         },
         computed:{
-            ...mapState(useLoadingStore,['isUpdate'])
-
+            ...mapState(useLoadingStore,['isUpdate']),
+            ...mapState(useDataStore,['itemSelected'])
         }
     }
 </script>

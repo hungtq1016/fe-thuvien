@@ -21,7 +21,7 @@
                             </div>
                         </div>
                         <EasyDataTable :headers="label" :items-selected="itemsSelected" :items="dataTable"
-                            :search-field="searchField" :search-value="searchValue" @click-row="showRow" 
+                            :search-field="searchField" :search-value="searchValue"
                             table-class-name="!border-gray-300 py-2 rounded-lg"
                             body-row-class-name="even:bg-white odd:bg-gray-100"
                             body-item-class-name="!bg-transparent max-w-sm truncate"
@@ -54,16 +54,16 @@
                                     {{ item.role.name }}
                                 </span>
                                 <template v-else>
-                                    <button class="w-4 h-4 rounded-full"  @click="updateStatusRow(item)"
+                                    <button class="w-4 h-4 rounded-full"  @click="patchStatusItem(item)"
                                     :class=" item.status == 1 ? 'bg-lime-600' : 'bg-red-600' "></button>
                                 </template>
                             </template>
                             <template #item-operation="item">
                                 <div class="flex gap-x-2">
-                                    <button @click="updateRow(item)">
+                                    <button @click="editRow(item)">
                                         <PencilIcon class="w-5 h-5 text-gray-600 hover:text-black" />
                                     </button>
-                                    <button @click="deleteRow(item)">
+                                    <button @click="deleteItem(item.id)">
                                         <TrashIcon class="w-5 h-5 text-red-600 hover:animate-wiggle" />
                                     </button>
                                 </div>
@@ -80,10 +80,10 @@
 <script>
 import PaginateComponent from './ThePagination.vue';
 import { PencilIcon, TrashIcon } from "@heroicons/vue/24/outline";
-import Swal from "sweetalert2";
 import {mapActions,mapState} from 'pinia';
 import {useLoadingStore} from '@/stores/loading';
 import {useTableStore} from '@/stores/table';
+import { useDataStore } from '@/stores/data';
 
 export default {
     components: { PencilIcon, TrashIcon, PaginateComponent },
@@ -100,24 +100,13 @@ export default {
     },
     methods: {
         ...mapActions(useLoadingStore,['toggleUpdate','toggleOpen']),
-        ...mapActions(useTableStore,['fetchDataTable','deleteItem']),
+        ...mapActions(useTableStore,['fetchDataTable']),
+        ...mapActions(useDataStore,['patchStatusItem','deleteItem','getItem']),
 
-        showRow() {
-        },
-        updateRow(){
+        editRow(item){
             this.toggleUpdate(true)
             this.toggleOpen(true)
-        },
-        deleteRow(item) {
-            Swal.fire({ title: 'Bạn có chắc chắn muốn xóa?', text: "Sẽ không trở về lại như ban đầu!!!", icon: 'warning', showCancelButton: true, confirmButtonColor: '#3085d6', cancelButtonColor: '#d33', confirmButtonText: 'Đồng ý', cancelButtonText: 'Hủy' }).then((result) => {
-                if (result.isConfirmed) {
-                    this.deleteItem(item.id);
-                    Swal.fire( { title: 'Thành công!', text: 'Đã xóa dòng thành công.', icon: 'success', confirmButtonText: 'Hoàn thành', } )
-                }
-            })
-        },
-        updateStatusRow(){
-             
+            this.getItem(item)
         },
     },
     computed: {

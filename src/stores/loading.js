@@ -1,8 +1,11 @@
 import { defineStore } from 'pinia'
+import VueCookies from 'vue-cookies'
 
 export const useLoadingStore = defineStore('loading',{
   state: () => ({
       apiURL: 'http://localhost:8000',
+      config : { headers: { Authorization: `Bearer ${ VueCookies.get("ltoken")}`,
+     } },
       resource: null,
       isModalOpen:false,
       isUpdate:false,
