@@ -58,8 +58,8 @@
 
 <script>
 import { QueueListIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapMutations ,mapGetters} from "vuex";
-
+import { useLoadingStore } from "@/stores/loading";
+import { mapActions ,mapState} from 'pinia'
     export default {
         components:{QueueListIcon},
         data(){
@@ -84,16 +84,17 @@ import { mapActions, mapMutations ,mapGetters} from "vuex";
                 payload.append('desc',this.form.desc)
                 payload.append('image',this.form.image)
                 this.isUpdate ? this.putData(this.form) : this.postData(payload)
-                this.CLOSE_MODAL()
+                this.toggleOpen(false)
             },
-            ...mapActions(['postData','putData']),
-            ...mapMutations(['CLOSE_MODAL'])
+        ...mapActions(useLoadingStore,['toggleOpen']),
+
         },
         mounted() {
             this.isUpdate ? this.form = this.getUpdateData : this.form={name:'',desc:'',image:null};
         },
         computed:{
-            ...mapGetters(['getUpdateData','isUpdate']),
+            ...mapState(useLoadingStore,['isUpdate'])
+
         }
     }
 </script>

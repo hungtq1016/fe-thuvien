@@ -138,7 +138,7 @@ export default {
     methods: {
         async submit() {
             const login = await axios
-                .post(`/api/login`, this.form)
+                .post(`${this.apiURL}/api/login`, this.form)
                 .catch(() => {
                     Swal.fire({
                         icon: "warning",
@@ -154,6 +154,7 @@ export default {
             if (login) {
                 //Ma hoa cho role admin
                 const today = new Date()
+                console.log(login);
                 const isAdmin = window.btoa(today.getMonth() + "admin");
                 this.$cookies.set("ltoken",login.data.data.token, "1d");
                 this.$cookies.set("info_user",login.data.data, "1d");
@@ -170,7 +171,6 @@ export default {
     },
     mounted(){
         this.isRegister = (this.$route.query.action == 'register') ? true : false
-        axios.defaults.baseURL = this.apiURL
     },
     computed: {
         ...mapState(useLoadingStore,['apiURL'])

@@ -2,7 +2,7 @@ import { defineStore } from 'pinia'
 
 export const useLoadingStore = defineStore('loading',{
   state: () => ({
-      apiURL: 'http://api.tranhung.info',
+      apiURL: 'http://localhost:8000',
       resource: null,
       isModalOpen:false,
       isUpdate:false,

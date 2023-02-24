@@ -10,8 +10,8 @@
 <script>
 import { BuildingOfficeIcon, BookOpenIcon, TagIcon, HomeIcon, ExclamationCircleIcon, UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon } from '@heroicons/vue/24/outline'
 import { mapActions} from 'pinia';
-import {useLoadingStore} from '../../stores/loading';
-import {useDataStore} from '../../stores/data';
+import {useLoadingStore} from '@/stores/loading';
+import {useDataStore} from '@/stores/data';
 
 export default {
     data() {
@@ -37,7 +37,6 @@ export default {
         toggle(item){
             this.setResource(item.resource)
             this.setTitle(item.label)
-            this.fetchDataTable();
         }
     },
 }

@@ -115,8 +115,8 @@
 
 <script>
 import { UserIcon, GlobeAsiaAustraliaIcon,ClockIcon } from "@heroicons/vue/24/outline";
-import { mapActions, mapMutations ,mapGetters} from "vuex";
-
+import { useLoadingStore } from "@/stores/loading";
+import { mapActions,mapState } from 'pinia'
     export default {
         components:{UserIcon,GlobeAsiaAustraliaIcon,ClockIcon},
         data(){
@@ -152,23 +152,23 @@ import { mapActions, mapMutations ,mapGetters} from "vuex";
                 payload.append('gender',this.form.gender)
                 payload.append('image',this.form.image)
                 this.isUpdate ? this.putData(payload) : this.postData(payload)
-                this.CLOSE_MODAL()
+                this.toggleOpen(false)
             },
-            ...mapActions(['postData','putData']),
-            ...mapMutations(['CLOSE_MODAL'])
+        ...mapActions(useLoadingStore,['toggleOpen']),
+
         },
         mounted() {
             this.isUpdate ? this.form = this.getUpdateData : this.form={name:'',country:'',yob: null, yod: null, gender: 'male',image:null};
             this.isUpdate ? '' : this.form.yob = this.currentDate
         },
         computed:{
-            ...mapGetters(['getUpdateData','isUpdate']),
             currentDate(){
                 const currentDate = new Date();
                 let month = currentDate.getMonth()+1;
                 month = month < 10 ? '0'+month :month
                 return  currentDate.getFullYear() + '-' + month + '-' + currentDate.getDate()
-            }
+            },
+            ...mapState(useLoadingStore,['isUpdate'])
         }
     }
 </script>

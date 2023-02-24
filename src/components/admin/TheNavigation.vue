@@ -20,10 +20,10 @@
             <Menu as="div" class="relative ml-3">
                 <div>
                     <MenuButton
-                        class="flex max-w-xs items-center rounded-full bg-zinc-900 text-sm focus:outline-none focus:ring-2 focus:dark:ring-red-600  focus:ring-sky-600 focus:ring-offset-2"
+                        class="flex max-w-xs items-center rounded-full text-sm focus:outline-none focus:ring-2 focus:dark:ring-red-600  focus:ring-sky-600 focus:ring-offset-2"
                     >
                         <span class="sr-only">Open  menu</span>
-                        <img class="h-8 w-8 rounded-full" :src="this.getApiUrl+'/logo/logo.png'" alt="logo" />
+                        <img class="h-8 w-8 rounded-full" :src="'/logo/logo.png'" alt="logo" />
                     </MenuButton>
                 </div>
                 <transition
@@ -38,7 +38,7 @@
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md dark:bg-zinc-900 bg-white pb-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none dark:shadow-none"
                     >
                         <div class="px-4 py-2 text-white dark:bg-red-600 bg-sky-600 text-lg rounded-t-md">Xin chào <span class=""> {{this.getData.name}}</span>!</div>
-                        <MenuItem v-for="item in list"  v-slot="{ active }">
+                        <MenuItem v-for="item in list"  v-slot="{ active }" :key="item">
                             <a @click="submit(item.method)"
                             :class="[active ? 'dark:bg-red-900 bg-sky-700 ' : '', 'block px-4 py-2 text-sm dark:text-white text-black hover:text-white']">{{ item.name }}</a>
                         </MenuItem>
@@ -50,7 +50,6 @@
 </template>
 <script>
 import axios from 'axios';
-import { mapGetters } from "vuex";
 export default {
 
     data() {
@@ -79,7 +78,6 @@ export default {
             const data =  this.$cookies.get('info_user')
             return data;
         },
-        ...mapGetters(['getApiUrl'])
     }
 };
 </script>

@@ -35,12 +35,11 @@
 </template>
 
 <script>
-import { TableCellsIcon ,XMarkIcon,PlusIcon} from "@heroicons/vue/24/outline";
-import { mapActions, mapMutations ,mapGetters} from "vuex";
-import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
-
+import { XMarkIcon,PlusIcon} from "@heroicons/vue/24/outline";
+import { useLoadingStore } from "@/stores/loading";
+import { mapActions,mapState } from 'pinia'
     export default {
-        components:{TableCellsIcon,CheckIcon, ChevronUpDownIcon,XMarkIcon ,PlusIcon},
+        components:{XMarkIcon ,PlusIcon},
         data(){
             return{
                 data:[],
@@ -58,15 +57,17 @@ import { CheckIcon, ChevronUpDownIcon } from '@heroicons/vue/20/solid'
                 payload.append('name',this.form.name)
                 this.isUpdate ? this.putData(this.form) : this.postData(payload)
                 this.CLOSE_MODAL()
+                this.toggleOpen(false)
             },
-            ...mapActions(['postData','putData']),
-            ...mapMutations(['CLOSE_MODAL'])
+        ...mapActions(useLoadingStore,['toggleOpen']),
+
         },
         mounted() {
             this.isUpdate ? this.form = this.getUpdateData : this.form={name:''};
         },
         computed:{
-            ...mapGetters(['getUpdateData','isUpdate']),
+            ...mapState(useLoadingStore,['isUpdate'])
+
         }
     }
 </script>

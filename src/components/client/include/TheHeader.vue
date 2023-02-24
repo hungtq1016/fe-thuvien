@@ -2,7 +2,7 @@
     <div class="px-1 md:px-2 lg:px-0 py-4 bg-sky-200 dark:bg-red-500">
         <div class="flex mx-auto max-w-7xl items-center justify-between">
             <router-link to="/" class="bg-sky-200 dark:bg-red-500">
-                <img class="h-10 w-auto" :src="this.getApiUrl+'/logo/logo.png'" alt="ITC" />
+                <img class="h-10 w-auto" :src="'/logo/logo.png'" alt="ITC" />
             </router-link>
             <div class="flex gap-x-2">
                 <router-link to="/login" class="flex items-center group rounded-full bg-white max-h-9">
@@ -203,7 +203,6 @@ import { Popover, PopoverButton, PopoverGroup, PopoverPanel, Switch } from '@hea
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { ArrowPathIcon, Bars3Icon, BookmarkSquareIcon, CalendarIcon, ChartBarIcon, CursorArrowRaysIcon, LifebuoyIcon, PhoneIcon, PlayIcon, ShieldCheckIcon, Squares2X2Icon, XMarkIcon, } from '@heroicons/vue/24/outline'
 import { useDark, useToggle } from '@vueuse/core';
-import { mapGetters } from 'vuex';
 
 export default {
     data() {
@@ -270,7 +269,6 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['getApiUrl'])        
     },
 }
 </script>
@@ -296,9 +294,5 @@ const resources = [
     },
     { name: 'Security', description: 'Understand how we take your privacy seriously.', href: '#', icon: ShieldCheckIcon },
 ]
-const recentPosts = [
-    { id: 1, name: 'Boost your conversion rate', href: '#' },
-    { id: 2, name: 'How to use search engine optimization to drive traffic to your site', href: '#' },
-    { id: 3, name: 'Improve your customer experience', href: '#' },
-]
+
 </script>

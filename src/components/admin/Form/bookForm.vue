@@ -78,8 +78,10 @@
 </template>
 
 <script>
-import { mapActions, mapMutations, mapGetters } from "vuex";
+
 import { BookOpenIcon,GlobeAsiaAustraliaIcon,ClockIcon } from "@heroicons/vue/24/outline";
+import { useLoadingStore } from "@/stores/loading";
+import { mapActions ,mapState} from 'pinia'
 import SelectInput from "../Input/SelectInputComponent.vue";
 import SelectOnly from "../Input/SelectOnlyComponennt.vue";
 
@@ -122,31 +124,29 @@ export default {
             payload.append('series_id',this.form.series_id);
             payload.append('image',this.form.image);
             this.isUpdate ? this.putData(this.form) : this.postData(payload);
-            this.CLOSE_MODAL();
-        },
+                this.toggleOpen(false)
+            },
+        ...mapActions(useLoadingStore,['toggleOpen']),
         onFileChange(e) {
                 const file = e.target.files[0];
                 this.form.image = file;
                 this.url = URL.createObjectURL(file);
             },
-        ...mapActions(["postData", "putData"]),
-        ...mapMutations(["CLOSE_MODAL"]),
-        test(){
-            console.log(this.form);
-        }
+
     },
     mounted() {
         // this.isUpdate ? (this.form = this.getUpdateData) : (this.form = { name: "" });
         this.isUpdate ? '' : this.form.release = this.currentDate
     },
     computed: {
-        ...mapGetters(["getUpdateData", "isUpdate"]),
         currentDate(){
                 const currentDate = new Date();
                 let month = currentDate.getMonth()+1;
                 month = month < 10 ? '0'+month :month
                 return  currentDate.getFullYear() + '-' + month + '-' + currentDate.getDate()
-        }
+        },
+        ...mapState(useLoadingStore,['isUpdate'])
+
     },
 };
 </script>
