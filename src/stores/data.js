@@ -31,8 +31,9 @@ export const useDataStore = defineStore('data',{
         this.table.fetchDataTable()
         this.loading.toggleOpen(false)
       })
-      .catch(err=>{
-        console.log(err);
+      .catch(error=>{
+        Swal.fire( { title: 'Thất bại!', text: error.response.data.message, icon: 'error', confirmButtonText: 'Xác Nhận', } )
+        console.log(error);
       })
     },
 
@@ -48,8 +49,8 @@ export const useDataStore = defineStore('data',{
         this.table.fetchDataTable()
         this.loading.toggleOpen(false)
       })
-      .catch(err=>{
-        console.log(err);
+      .catch((error)=>{
+        Swal.fire( { title: 'Thất bại!', text: error.response.data.message, icon: 'error', confirmButtonText: 'Xác Nhận', } )
       })
     },
 

@@ -1,6 +1,6 @@
 <template>
     <div class="sm:overflow-hidden sm:rounded-md">
-        <form @submit.prevent="submitForm">
+        <form @submit.prevent="submitForm" enctype="multipart/form-data">
             <div class="space-y-4 bg-white py-4">
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Tên Tác Giả</label>
@@ -8,7 +8,7 @@
                       <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                           <UserIcon class="w-4 h-5"/>
                       </span>
-                      <input type="text" id="name" placeholder="Nhập tên tác giả..." v-model="form.name"
+                      <input type="text" id="name" placeholder="Nhập tên tác giả..." v-model="form.name" autocomplete="family-name"
                       class="block w-full flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm"/>
                     </div>
                 </div>
@@ -18,7 +18,7 @@
                       <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                           <GlobeAsiaAustraliaIcon class="w-4 h-5"/>
                       </span>
-                      <input type="text" id="country" placeholder="Nhập quốc gia..." v-model="form.country"
+                      <input type="text" id="country" placeholder="Nhập quốc gia..." v-model="form.country" autocomplete="country"
                       class="block w-full flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm"/>
                     </div>
                 </div>
@@ -29,8 +29,6 @@
                           <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                               <ClockIcon class="w-4 h-5"/>
                           </span>
-                          <!-- <Datepicker v-model="form.yob" inputFormat="dd-MM-yyyy"
-                          class="flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm" id="yob"/> -->
                           <input type="date" v-model="form.yob"
                           class="w-full rounded-r-lg border-gray-300">
                         </div>
@@ -41,8 +39,7 @@
                           <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                               <ClockIcon class="w-4 h-5"/>
                           </span>
-                          <!-- <Datepicker v-model="form.yod" inputFormat="dd-MM-yyyy"
-                          class=" flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm" id="yod"/> -->
+
                           <input type="date" v-model="form.yod" :max="this.currentDate"
                           class="w-full rounded-r-lg border-gray-300">
                         </div>
@@ -95,7 +92,7 @@
                         <div class="absolute inset-0 bg-white" :class="{'hidden':!url}">
                             <img v-if="url" :src="url" class="w-full h-full object-cover rounded-md mx-auto"/>
                         </div>
-                        <button @click="this.url = null,this.image = null"
+                        <button @click="this.url = null,this.form.image = 'undefined',this.hasImage = false" type="button"
                         class="absolute z-10 top-1 right-2 bg-gray-100 opacity-70 font-medium px-1 rounded hover:opacity-100 duration-500" :class="{'hidden':!url}">
                             Xóa
                         </button>
@@ -114,8 +111,9 @@
 
 <script>
 import { UserIcon, GlobeAsiaAustraliaIcon,ClockIcon } from "@heroicons/vue/24/outline";
-import {useLoadingStore} from '@/stores/loading';
-import { mapActions,mapState } from "pinia";
+import { useDataStore } from "@/stores/data";
+import { useLoadingStore } from "@/stores/loading";
+import { mapActions,mapState } from 'pinia'
 
 
     export default {
@@ -132,6 +130,7 @@ import { mapActions,mapState } from "pinia";
                     image:null
                 },
                 url:null,
+                hasImage:false
             }
         },
         methods: {
@@ -140,6 +139,7 @@ import { mapActions,mapState } from "pinia";
                 this.form.yod = (this.form.yod == null) ? this.currentDate : null
             },
             onFileChange(e) {
+                this.hasImage = true
                 const file = e.target.files[0];
                 this.form.image = file;
                 this.url = URL.createObjectURL(file);
@@ -152,14 +152,14 @@ import { mapActions,mapState } from "pinia";
                 payload.append('yod',this.form.yod)
                 payload.append('gender',this.form.gender)
                 payload.append('image',this.form.image)
-                this.isUpdate ? this.putData(payload) : this.postData(payload)
-                this.toggleOpen(false)
+                this.hasImage ? this.isUpdate ? this.patchItem(payload) : this.postItem(payload):
+                this.isUpdate ? this.patchItem(this.form) : this.postItem(this.form)
             },
-            ...mapActions(useLoadingStore,['toggleOpen'])
+            ...mapActions(useDataStore,['postItem','patchItem']),
         },
         mounted() {
-            this.isUpdate ? this.form = this.getUpdateData : this.form={name:'',country:'',yob: null, yod: null, gender: 'male',image:null};
-            this.isUpdate ? '' : this.form.yob = this.currentDate
+            this.isUpdate ? this.form = this.itemSelected : this.form={name:''};
+            this.isUpdate ? '' : this.form.yob = this.currentDate , this.url = this.itemSelected.image , this.form.image=this.itemSelected.image
         },
         computed:{
             currentDate(){
@@ -168,8 +168,8 @@ import { mapActions,mapState } from "pinia";
                 month = month < 10 ? '0'+month :month
                 return  currentDate.getFullYear() + '-' + month + '-' + currentDate.getDate()
             },
-            ...mapState(useLoadingStore,['isUpdate'])
-
+            ...mapState(useLoadingStore,['isUpdate']),
+            ...mapState(useDataStore,['itemSelected'])
         }
     }
 </script>
