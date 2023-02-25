@@ -8,7 +8,7 @@
                       <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
                           <QueueListIcon class="w-4 h-5"/>
                       </span>
-                      <input type="text" id="name" placeholder="Nhập ngôn ngữ..." v-model="form.name"
+                      <input type="text" id="name" placeholder="Nhập ngôn ngữ..." v-model="form.name" autocomplete="language"
                       class="block w-full flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm"/>
                     </div>
                 </div>

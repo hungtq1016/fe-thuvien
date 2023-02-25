@@ -80,6 +80,12 @@ const admin = [
                 meta: { title: 'Sách' },
                 component: () => import("../views/Admin/TableView.vue"),
             },
+            {
+                path: 'image',
+                name: "AdminImage",
+                meta: { title: 'Hình Ảnh' },
+                component: () => import("../views/Admin/ImageView.vue"),
+            },
         ],
     },
     

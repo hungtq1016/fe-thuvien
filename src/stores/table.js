@@ -27,6 +27,7 @@ export const useTableStore = defineStore('table', {
           this.dataTable = response.data.data
           this.links = response.data.links
           this.meta = response.data.meta
+
       })
     },
 

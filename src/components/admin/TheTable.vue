@@ -33,13 +33,8 @@
                             <template #empty-message>
                                 <span>Dữ liệu không tìm thấy</span>
                             </template>
-                            <template #item-image="item">
-                                <template v-if="item.image">
-                                    <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-full my-1"
-                                    v-if="item.image.split('/')[0]  == 'http:' || item.image.split('/')[0]  == 'https:'"/>
-                                    <img :src="'/images/'+item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-full my-1"
-                                        v-else/>
-                                </template>
+                            <template #item-image="{item}">
+                                <img :src="item.image.path" :alt="item" class="w-16 h-16 object-cover rounded-full my-1"/>
                             </template>
                             <template #item-desc="{ desc, country ,email }">
                                 <span class="truncate" v-if="!email">{{

@@ -37,13 +37,12 @@ export const useDataStore = defineStore('data',{
       })
     },
 
-    async patchItem(item) {
+    async patchItem(payload) {
 
       const url = this.loading.apiURL;
       const resource = this.loading.resource;
       const config = this.loading.config;
-
-      await axios.patch(`${url}/api/${resource}/${item.id}`,item,config)
+      await axios.patch(`${url}/api/${resource}/${payload.id}`,payload,config)
       .then(res=>{
         Swal.fire( { title: 'Thành công!', text: res.data.message, icon: 'success', confirmButtonText: 'Hoàn thành', } )
         this.table.fetchDataTable()
@@ -68,6 +67,7 @@ export const useDataStore = defineStore('data',{
       })
       .catch(err=>console.log(err))
     },
+
     deleteItem(id) {
 
       const url = this.loading.apiURL;

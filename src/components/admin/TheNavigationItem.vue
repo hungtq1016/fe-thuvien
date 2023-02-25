@@ -1,14 +1,15 @@
 <template>
     <router-link v-for="item in navigation" :key="item.label" :to="{name:item.name}" @click="toggle(item)"
-    class="text-slate-900 dark:text-gray-300 hover:dark:bg-gray-700 hover:text-white hover:bg-sky-600 hover:dark:text-red-600 group flex items-center px-2 py-2 text-sm font-medium rounded-md">
+    class="text-gray-600 
+    hover:bg-sky-100 hover:text-sky-600 flex items-center gap-x-2 px-4 py-2 rounded-lg admin-route">
         <component :is="item.icon"
-        class="text-gray-400 dark:group-hover:text-red-800 group-hover:text-slate-100 mr-3 flex-shrink-0 h-6 w-6" aria-hidden="true" />
-        {{ item.label }}
+        class="h-6 w-6" aria-hidden="true" />
+        <span>{{ item.label }}</span>
     </router-link>
 </template>
 
 <script>
-import { BuildingOfficeIcon, BookOpenIcon, TagIcon, HomeIcon, ExclamationCircleIcon, UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon } from '@heroicons/vue/24/outline'
+import { BuildingOfficeIcon, BookOpenIcon, TagIcon,PhotoIcon, HomeIcon, ExclamationCircleIcon, UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon } from '@heroicons/vue/24/outline'
 import { mapActions} from 'pinia';
 import {useLoadingStore} from '@/stores/loading';
 import {useDataStore} from '@/stores/data';
@@ -28,6 +29,7 @@ export default {
                 { label: 'Vai Trò', resource: 'role',name:'AdminRole' ,icon: ExclamationCircleIcon },
                 { label: 'Nhà Xuất Bản', resource: 'publisher',name:'AdminPublisher' ,icon: BuildingOfficeIcon },
                 { label: 'Ngôn Ngữ', resource: 'language',name:'AdminLanguage' ,icon: LanguageIcon },
+                { label: 'Kho Hình', resource: 'image',name:'AdminImage' ,icon: PhotoIcon },
             ]
         }
     },

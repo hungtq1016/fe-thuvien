@@ -47,11 +47,12 @@
     import publicsherForm from './Form/publicsherForm.vue';
     import userForm from './Form/userForm.vue';
     import roleForm from './Form/roleForm.vue';
+    import imageForm from './Form/imageForm.vue';
 
 
     export default {
         components:{TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,XMarkIcon,
-            authorForm, bookForm,bookshelfForm,categoryForm,languageForm,tagForm,majorForm,userForm,publicsherForm,roleForm},
+            authorForm, bookForm,bookshelfForm,categoryForm,languageForm,tagForm,majorForm,userForm,publicsherForm,roleForm,imageForm},
         methods:{
             ...mapActions(useLoadingStore,['toggleOpen','toggleUpdate'])
         },
