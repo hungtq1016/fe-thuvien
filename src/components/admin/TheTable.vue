@@ -33,8 +33,9 @@
                             <template #empty-message>
                                 <span>Dữ liệu không tìm thấy</span>
                             </template>
-                            <template #item-image="{item}">
-                                <img :src="item.image.path" :alt="item" class="w-16 h-16 object-cover rounded-full my-1"/>
+                            <template #item-image="{image}">
+                                <img :src="image.path" :alt="image.name" class="w-16 h-16 object-cover rounded-full my-1" v-if="image !=null"/>
+                                <span v-else>Ảnh bị ẩn hoặc đã xóa</span>
                             </template>
                             <template #item-desc="{ desc, country ,email }">
                                 <span class="truncate" v-if="!email">{{

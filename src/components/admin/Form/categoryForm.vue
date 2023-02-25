@@ -19,7 +19,7 @@
                       class="block w-full flex-1 rounded-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm resize-none"/>
                     </div>
                 </div>
-                <ImageSelectComponent @dataChange="val=>{this.form.image=val}" :propImage="propImage"/>
+                <ImageSelectComponent @dataChange="val=>{this.form.image_id=val}" :propImage="propImage"/>
             </div>
             <div class="text-right">
               <button type="submit"
@@ -45,29 +45,22 @@ import ImageSelectComponent from "../Input/ImageSelectComponent.vue";
                 form:{
                     name:'',
                     desc:'',
-                    image:0
+                    image_id:1
                 },
                 propImage:null
             }
         },
         methods: {
             submitForm(){
-                let payload = new FormData();
-                payload.append('name',this.form.name)
-                payload.append('desc',this.form.desc)
-                payload.append('image_id',this.form.image)
-                this.isUpdate ? this.patchItem(this.form) : this.postItem(payload)
-                
+                this.isUpdate ? this.patchItem(this.form) : this.postItem(this.form)
             },
             ...mapActions(useDataStore,['postItem','patchItem']),
 
         },
         mounted() {
             if(this.isUpdate){
-                this.form.id = this.itemSelected.id;
-                this.form.name = this.itemSelected.name;
-                this.form.desc = this.itemSelected.desc;
-                this.form.image = this.itemSelected.image.id;
+                this.form = this.itemSelected
+                this.form.image_id = this.itemSelected.image !=null ? this.itemSelected.image.id : null
                 this.propImage = this.itemSelected.image;
             }
         },

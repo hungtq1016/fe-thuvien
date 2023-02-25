@@ -2,7 +2,7 @@
     <div>
         <label for="input" class="block text-sm font-medium text-gray-700 pt-2" >{{this.title}}</label >
         <div class="flex gap-1 py-2 flex-wrap">
-            <div v-for="(item,index) in list" :key="index" class="rounded-lg bg-sky-200 border border-sky-600 py-[2px] px-1 flex items-center gap-x-1 group" >
+            <div v-for="(item,index) in list" :key="index" class="rounded-lg bg-sky-100 border border-sky-600 py-[2px] px-1 flex items-center gap-x-1 group" >
                 <span>{{ item.name }}</span>
                 <button class="hidden group-hover:inline" type="button" @click="remove(index)">
                     <XMarkIcon class="w-3 h-3 text-red-600" />
@@ -29,7 +29,7 @@ import { mapState } from "pinia";
 import {useLoadingStore} from '../../../stores/loading';
 export default {
     components:{XMarkIcon},
-    props:['title','resource'],
+    props:['title','resource','propData'],
     data() {
         return {
             resourceData:[{
@@ -53,6 +53,7 @@ export default {
     },
     async mounted(){
         await axios.get(`${this.apiURL}/api/${this.resource}?limit=all`).then((response)=>{this.resourceData = response.data})
+        this.list = this.propData == null ?[ ] : this.propData
     },
     computed:{
         selectedId(){

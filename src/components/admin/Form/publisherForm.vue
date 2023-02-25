@@ -3,24 +3,25 @@
         <form @submit.prevent="submitForm" enctype='multipart/form-data'>
             <div class="space-y-4 bg-white py-4">
                 <div>
-                    <label for="name" class="block text-sm font-medium text-gray-700">Tên Thẻ</label>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Tên Nhà Xuất Bản</label>
                     <div class="mt-1 flex rounded-lg">
                       <span class="inline-flex items-center rounded-l-lg border border-r-0 border-gray-300 bg-gray-50 px-3 text-sm text-gray-500">
-                          <TagIcon class="w-4 h-5"/>
+                          <BuildingOffice2Icon class="w-4 h-5"/>
                       </span>
-                      <input type="text" id="name" placeholder="Nhập tên thẻ..." v-model="form.name" autocomplete="name"
+                      <input type="text" id="name" placeholder="Nhập tên NXB...." v-model="form.name"
                       class="block w-full flex-1 rounded-none rounded-r-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm"/>
                     </div>
                 </div>
-                <div>
-                    <label for="desc" class="block text-sm font-medium text-gray-700">Thông Tin</label>
-                    <div class="mt-1 rounded-lg">
-                      <textarea id="desc" placeholder="Nhập thông tin thể loại..." v-model="form.desc" rows="4" autocomplete="off"
-                      class="block w-full flex-1 rounded-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm resize-none"/>
-                    </div>
-                </div>
-                <ImageSelectComponent @dataChange="val=>{this.form.image_id=val}" :propImage="propImage"/>
             </div>
+            <div>
+                <label for="desc" class="block text-sm font-medium text-gray-700">Thông Tin</label>
+                <div class="mt-1 rounded-lg">
+                  <textarea id="desc" placeholder="Nhập thông tin thể loại..." v-model="form.desc" rows="4" autocomplete="off"
+                  class="block w-full flex-1 rounded-lg border-gray-300 focus:ring-sky-600 focus:ring-0 sm:text-sm resize-none"/>
+                </div>
+            </div>
+            <ImageSelectComponent @dataChange="val=>{this.form.image_id=val}" :propImage="propImage"/>
+
             <div class="text-right">
               <button type="submit"
               class="inline-flex justify-center rounded-md border border-transparent bg-sky-600 py-2 px-4 text-sm font-medium text-white shadow-sm
@@ -32,14 +33,13 @@
 </template>
 
 <script>
-import { TagIcon } from "@heroicons/vue/24/outline";
+import { BuildingOffice2Icon } from "@heroicons/vue/24/outline";
 import { useDataStore } from "@/stores/data";
 import { useLoadingStore } from "@/stores/loading";
 import { mapActions,mapState } from 'pinia'
 import ImageSelectComponent from "../Input/ImageSelectComponent.vue";
-
     export default {
-        components:{ TagIcon, ImageSelectComponent },
+        components:{BuildingOffice2Icon,ImageSelectComponent},
         data(){
             return{
                 form:{
@@ -53,7 +53,6 @@ import ImageSelectComponent from "../Input/ImageSelectComponent.vue";
         methods: {
             submitForm(){
                 this.isUpdate ? this.patchItem(this.form) : this.postItem(this.form)
-                
             },
             ...mapActions(useDataStore,['postItem','patchItem']),
 

@@ -44,7 +44,7 @@
     import languageForm from './Form/languageForm.vue';
     import tagForm from './Form/tagForm.vue';
     import majorForm from './Form/majorForm.vue';
-    import publicsherForm from './Form/publicsherForm.vue';
+    import publisherForm from './Form/publisherForm.vue';
     import userForm from './Form/userForm.vue';
     import roleForm from './Form/roleForm.vue';
     import imageForm from './Form/imageForm.vue';
@@ -52,7 +52,7 @@
 
     export default {
         components:{TransitionRoot, TransitionChild, Dialog, DialogPanel, DialogTitle,XMarkIcon,
-            authorForm, bookForm,bookshelfForm,categoryForm,languageForm,tagForm,majorForm,userForm,publicsherForm,roleForm,imageForm},
+            authorForm, bookForm,bookshelfForm,categoryForm,languageForm,tagForm,majorForm,userForm,publisherForm,roleForm,imageForm},
         methods:{
             ...mapActions(useLoadingStore,['toggleOpen','toggleUpdate'])
         },

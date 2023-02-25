@@ -52,52 +52,27 @@
                 <div>
                     <label for="about" class="block text-sm font-medium text-gray-700">Giới Tính</label>
                     <div class="grid grid-cols-3 gap-x-4 mt-1">
-                        <label for="male">
-                            <input class="peer hidden" type="radio" id="male" value="male" v-model="form.gender">
+                        <label for="Nam">
+                            <input class="peer hidden" type="radio" id="Nam" value="Nam" name="gender" v-model="form.gender">
                             <div class="border border-gray-300 rounded-lg py-3 peer-checked:border-sky-600 peer-checked:text-sky-600 font-medium text-gray-400 pl-3 hover:border-sky-600 hover:text-sky-600">
                                 Nam
                             </div>
                         </label>
-                        <label for="female">
-                            <input class="peer hidden" type="radio" id="female" value="female" v-model="form.gender">
+                        <label for="Nữ">
+                            <input class="peer hidden" type="radio" id="Nữ" value="Nữ" name="gender" v-model="form.gender">
                             <div class="border border-gray-300 rounded-lg py-3 peer-checked:border-sky-600 peer-checked:text-sky-600 font-medium text-gray-400 pl-3 hover:border-sky-600 hover:text-sky-600">
                                 Nữ
                             </div>
                         </label>
-                        <label for="other">
-                            <input class="peer hidden" type="radio" id="other" value="other" v-model="form.gender">
+                        <label for="Khác">
+                            <input class="peer hidden" type="radio" id="Khác" value="Khác" name="gender" v-model="form.gender">
                             <div class="border border-gray-300 rounded-lg py-3 peer-checked:border-sky-600 peer-checked:text-sky-600 font-medium text-gray-400 pl-3 hover:border-sky-600 hover:text-sky-600">
                                 Khác
                             </div>
                         </label>
                     </div>
                 </div>
-                <div>
-                    <label class="block text-sm font-medium text-gray-700">Hình Ảnh</label>
-                    <div class="mt-1 flex justify-center rounded-md border-2 border-dashed border-gray-300 px-6 pt-5 pb-6 relative">
-                        <div class="space-y-1 text-center">
-                            <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48" aria-hidden="true">
-                            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <div class="flex text-sm text-gray-600">
-                            <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-medium text-sky-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-sky-500 focus-within:ring-offset-2 hover:text-sky-500">
-                                <span>Tải ảnh lên</span>
-                                <input id="file-upload" name="file-upload" accept="image/png, image/jpeg, image/gif, image/jpg"
-                                type="file" @change="onFileChange" class="sr-only" />
-                            </label>
-                            <p class="pl-1">hoặc kéo thả ảnh vào</p>
-                            </div>
-                            <p class="text-xs text-gray-500">PNG, JPG, GIF tối đa 10MB</p>
-                        </div>
-                        <div class="absolute inset-0 bg-white" :class="{'hidden':!url}">
-                            <img v-if="url" :src="url" class="w-full h-full object-cover rounded-md mx-auto"/>
-                        </div>
-                        <button @click="this.url = null,this.form.image = 'undefined',this.hasImage = false" type="button"
-                        class="absolute z-10 top-1 right-2 bg-gray-100 opacity-70 font-medium px-1 rounded hover:opacity-100 duration-500" :class="{'hidden':!url}">
-                            Xóa
-                        </button>
-                    </div>
-                </div>
+                <ImageSelectComponent @dataChange="val=>{this.form.image_id=val}" :propImage="propImage"/>
             </div>
             <div class="text-right">
               <button type="submit"
@@ -114,10 +89,10 @@ import { UserIcon, GlobeAsiaAustraliaIcon,ClockIcon } from "@heroicons/vue/24/ou
 import { useDataStore } from "@/stores/data";
 import { useLoadingStore } from "@/stores/loading";
 import { mapActions,mapState } from 'pinia'
-
+import ImageSelectComponent from "../Input/ImageSelectComponent.vue";
 
     export default {
-        components:{UserIcon,GlobeAsiaAustraliaIcon,ClockIcon},
+        components:{UserIcon,GlobeAsiaAustraliaIcon,ClockIcon,ImageSelectComponent},
         data(){
             return{
                 isDeath:false,
@@ -126,11 +101,10 @@ import { mapActions,mapState } from 'pinia'
                     country:'',
                     yob: null,
                     yod: null,
-                    gender: 'male',
-                    image:null
+                    gender:'Nam',
+                    image_id:1
                 },
-                url:null,
-                hasImage:false
+                propImage:null
             }
         },
         methods: {
@@ -138,28 +112,19 @@ import { mapActions,mapState } from 'pinia'
                 this.isDeath = !this.isDeath;
                 this.form.yod = (this.form.yod == null) ? this.currentDate : null
             },
-            onFileChange(e) {
-                this.hasImage = true
-                const file = e.target.files[0];
-                this.form.image = file;
-                this.url = URL.createObjectURL(file);
-            },
             submitForm(){
-                let payload = new FormData();
-                payload.append('name',this.form.name)
-                payload.append('country',this.form.country)
-                payload.append('yob',this.form.yob)
-                payload.append('yod',this.form.yod)
-                payload.append('gender',this.form.gender)
-                payload.append('image',this.form.image)
-                this.hasImage ? this.isUpdate ? this.patchItem(payload) : this.postItem(payload):
                 this.isUpdate ? this.patchItem(this.form) : this.postItem(this.form)
+
             },
             ...mapActions(useDataStore,['postItem','patchItem']),
         },
         mounted() {
-            this.isUpdate ? this.form = this.itemSelected : this.form={name:''};
-            this.isUpdate ? '' : this.form.yob = this.currentDate , this.url = this.itemSelected.image , this.form.image=this.itemSelected.image
+            if(this.isUpdate){
+                this.form = this.itemSelected
+                this.form.image_id = this.itemSelected.image !=null ? this.itemSelected.image.id : null
+                this.propImage = this.itemSelected.image;
+                this.isDeath = this.itemSelected.yod != 'null' ? true : false
+            }
         },
         computed:{
             currentDate(){
