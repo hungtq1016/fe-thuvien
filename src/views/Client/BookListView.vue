@@ -13,15 +13,11 @@
 </template>
 
 <script>
-import BannerConponent from "../../components/client/banner/BannerConponent.vue";
-import GridComponent from "../../components/client/GridComponent.vue";
-import FilterComponent from "../../components/client/FilterComponent.vue";
+import BannerConponent from "@/components/client/banner/BannerConponent.vue";
+import GridComponent from "@/components/client/GridComponent.vue";
+import FilterComponent from "@/components/client/FilterComponent.vue";
 
 export default {
     components: { BannerConponent,GridComponent,FilterComponent},
 };
 </script>
-<script setup>
-  import { ref } from 'vue'
-
-  </script>

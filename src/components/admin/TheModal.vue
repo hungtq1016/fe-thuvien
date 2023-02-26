@@ -1,9 +1,12 @@
 <template>
-    <div class="flex items-center justify-end bg-white rounded-lg py-4 px-4">
-      <button type="button" @click="this.toggleOpen(true),this.toggleUpdate(false)" class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75" >
-        Thêm {{this.title }}
-      </button>
-    </div>
+    <div class="flex items-center justify-between bg-white rounded-lg p-4 md:px-6 lg:px-8">
+        <h1 class="text-2xl font-semibold dark:text-white text-slate-900 uppercase">
+          {{ this.title }}
+      </h1>
+        <button type="button" @click="this.toggleOpen(true), this.toggleUpdate(false)" class="rounded-lg bg-sky-600 px-4 py-2 text-sm font-medium text-white hover:bg-sky-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75" >
+          Thêm {{ this.title }}
+        </button>
+      </div>
     <TransitionRoot appear :show="this.isModalOpen" as="template">
       <Dialog as="div" @close="this.toggleOpen(false)" class="relative z-10">
         <TransitionChild as="template" enter="duration-300 ease-out" enter-from="opacity-0" enter-to="opacity-100" leave="duration-200 ease-in" leave-from="opacity-100" leave-to="opacity-0" >

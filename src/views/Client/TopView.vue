@@ -1,26 +1,27 @@
 <template>
     <div class="bg-white dark:bg-black">
-        <Recommend/>
-        <Section v-for="item in section" :key="item.slug" :section="item"/>
+        <TheRecommend/>
+        <TheSection v-for="item in section" :key="item.slug" :section="item"/>
         <div class="bg-sky-200 dark:bg-red-600">
             <div class="max-w-7xl mx-auto py-4 text-center ">
                 <h1 class="text-4xl font-bold leading-[52px] text-white dark:text-gray-200">Theo thể loại</h1>
             </div>
         </div>
-        <div class="grid grid-cols-2">
 
-        </div>
-        <ByCategory v-for="item in category" :key="item.slug" :category="item"/>
+        <TheCategory v-for="category in categories" :key="category.slug" :category="category"/>
     </div>
 </template>
 
 <script>
-    import Recommend from "../../components/client/home/Recommend.vue";
-    import Section from "../../components/client/home/Section.vue";
-    import ByCategory from "../../components/client/home/ByCategory.vue";
+    import TheRecommend from "@/components/client/home/TheRecommend.vue";
+    import TheSection from "@/components/client/home/TheSection.vue";
+    import TheCategory from "@/components/client/home/TheCategory.vue";
+    import axios from "axios";
+    import { mapState } from "pinia";
+    import { useLoadingStore } from "../../stores/loading";
 
     export default {
-        components: { Recommend,Section,ByCategory},
+        components: { TheRecommend,TheSection,TheCategory},
         data(){
             return{
                 section:[
@@ -45,43 +46,21 @@
                     {
                         title:'Theo Ngành',
                         desc:'Tài liệu chuyên ngành',
-                        slug:'subject',
+                        slug:'major',
                         limit:4
                     },
                 ],
-                category:[
-                    {
-                        title:'Hành Động',
-                        desc:'Tài liệu...',
-                        slug:'action',
-                        limit:3
-                    },
-                    {
-                        title:'Phiêu Lưu',
-                        desc:'Tài liệu...',
-                        slug:'advanture',
-                        limit:3
-                    },
-                    {
-                        title:'Cổ Tích',
-                        desc:'Tài liệu...',
-                        slug:'myth',
-                        limit:3
-                    },
-                    {
-                        title:'test2',
-                        desc:'Tài liệu...',
-                        slug:'test2',
-                        limit:3
-                    },
-                ]
+                categories:[]
             }
-        }
+        },
+        async mounted() {
+            await axios.get(`${this.apiURL}/api/category/?type=more&limit=5`)
+            .then(res=>{
+                this.categories = res.data;
+            })
+        },
+        computed: {
+            ...mapState(useLoadingStore,['apiURL'])
+        },
     };
-</script>
-
-<script setup>
-
-
-
 </script>

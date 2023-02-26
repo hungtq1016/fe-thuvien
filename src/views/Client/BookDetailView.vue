@@ -406,19 +406,19 @@
                 </div>
             </div>
         </section>
-        <Section :section="section" />
+        <TheSection :section="section" />
 
     </div>
 </template>
 <script>
-import Section from '../../components/client/home/Section.vue';
+import TheSection from '@/components/client/home/TheSection.vue';
 import StarRating from "vue-star-rating";
 import { CheckIcon,HeartIcon,ChevronUpIcon  ,StarIcon} from "@heroicons/vue/20/solid";
 import { RadioGroup, RadioGroupDescription, RadioGroupLabel, RadioGroupOption,  Disclosure, DisclosureButton, DisclosurePanel} from "@headlessui/vue";
 
 export default {
     components: { StarRating,CheckIcon,RadioGroup, RadioGroupDescription, RadioGroupLabel,
-        RadioGroupOption,Disclosure, DisclosureButton, DisclosurePanel ,HeartIcon,ChevronUpIcon,StarIcon,Section },
+        RadioGroupOption,Disclosure, DisclosureButton, DisclosurePanel ,HeartIcon,ChevronUpIcon,StarIcon,TheSection },
     data() {
         return {
             selectedSeries: "",

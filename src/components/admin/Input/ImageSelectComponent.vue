@@ -13,7 +13,7 @@
             </form>
         </div>
         <div class="overflow-y-scroll h-60 grid grid-cols-3 gap-2 mt-1">
-            <template v-for="image in images" :key="image.id">
+            <template v-for="image in this.dataImage" :key="image.id">
                 <label :for="image.id">
                     <input  type="radio" :id="image.id" :value="image" v-model="imageSelected" @change="chooseImageId" name="image"
                     class="peer hidden">
@@ -34,7 +34,8 @@
 <script>
 import axios from 'axios';
 import { useLoadingStore } from '@/stores/loading';
-import {mapState} from 'pinia'
+import { useImageStore } from '@/stores/image';
+import {mapActions, mapState} from 'pinia'
 
     export default {
         props:['propImage'],
@@ -69,15 +70,16 @@ import {mapState} from 'pinia'
                     await axios.get(`${this.apiURL}/api/image?page=${this.page}&limit=9`).then((response)=>{this.images = response.data.data})
                 })
             },
+            ...mapActions(useImageStore,['fetchDataImage'])
         },
-        async mounted () {
-            await axios.get(`${this.apiURL}/api/image?page=${this.page}&limit=9`).then((response)=>{this.images = response.data.data})
-            if (this.propImage != null) {
-                this.imageSelected=this.propImage
-            }  
+        mounted () {
+            // await axios.get(`${this.apiURL}/api/image?page=${this.page}&limit=9`).then((response)=>{this.images = response.data.data}),
+            this.fetchDataImage(),
+            this.propImage != null?this.imageSelected=this.propImage: null
         },
         computed:{
-            ...mapState(useLoadingStore,['apiURL','config'])
+            ...mapState(useLoadingStore,['apiURL','config']),
+            ...mapState(useImageStore,['dataImage'])
         }
     }
 </script>

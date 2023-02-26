@@ -6,37 +6,28 @@ import Swal from "sweetalert2";
 export const useImageStore = defineStore('image', {
   state: () => ({
     dataImage: [],
-    limit: 10,
-    links: [],
-    meta: [],
+    limit: 12,
     page: 1,
     loading: useLoadingStore(),
   }),
 
   actions: {
-    setLimit(value) {
-      this.limit = value
-    },
-
     async fetchDataImage() {
       const url = this.loading.apiURL;
 
       await axios.get(`${url}/api/image?page=${this.page}&limit=${this.limit}`)
         .then((response) => {
           this.dataImage = response.data.data
-          this.links = response.data.links
-          this.meta = response.data.meta
         })
     },
 
+    async moreImage() {
+      const url = this.loading.apiURL;
+      this.page++;
 
-    async fetchImageByLink(url) {
-
-      await axios.get(`${url}&limit=${this.limit}`)
+      await axios.get(`${url}/api/image?page=${this.page}&limit=${this.limit}`)
         .then((response) => {
-          this.edataImage = response.data.data
-          this.links = response.data.links
-          this.meta = response.data.meta
+          this.dataImage.push(...response.data.data);
         })
     },
 

@@ -1,0 +1,7 @@
+.router-link-exact-active.admin-route{
+    @apply text-sky-600 bg-sky-100
+}
+
+.book-category-route:not(:last-child){
+    @apply relative after:content-[','] 
+}

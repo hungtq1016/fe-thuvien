@@ -19,6 +19,9 @@ module.exports = {
       boxShadow: {
         'b': '0 4px 2px -2px rgba(0, 0, 0, 0.1)',
       }
+    },
+    fontFamily: {
+      'sans': ["Noto Sans"]
     }
   },
   plugins: [

@@ -91,7 +91,6 @@
             </div>
             <main class="flex-1 ">
                 <div class="p-6 space-y-4">
-                    <TheTitle/>
                     <RouterView/>
                 </div>
             </main>
@@ -101,14 +100,13 @@
 import TheAside from "../../components/admin/TheAside.vue";
 import TheNavigationItem from "../../components/admin/TheNavigationItem.vue";
 import TheNavigation from "../../components/admin/TheNavigation.vue";
-import TheTitle from '../../components/admin/TheTitle.vue';
 
 import { ref } from "vue";
 import { Bars3BottomLeftIcon, XMarkIcon, } from "@heroicons/vue/24/outline";
 import { Dialog, DialogPanel, TransitionChild, TransitionRoot, } from "@headlessui/vue";
 export default {
-    components: { TheAside, TheNavigationItem, TheNavigation,TheTitle, Bars3BottomLeftIcon, XMarkIcon, }
-};
+    components: { TheAside, TheNavigationItem, TheNavigation, Bars3BottomLeftIcon, XMarkIcon, }
+}
 </script>
 
 <script setup>

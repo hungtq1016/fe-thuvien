@@ -8,7 +8,9 @@
                     </h2>
                 </div>
                 <div class="mx-auto mt-12 grid max-w-lg gap-5 lg:max-w-none lg:grid-cols-2">
-                    <HorizontalItem v-for="value in data" :key="value.title" :value="value"/>
+                    <!-- <HorizontalItem v-for="value in data" :key="value.title" :book="book"/> -->
+                    <div>1</div>
+                    <div>2</div>
                 </div>
             </div>
         </div>

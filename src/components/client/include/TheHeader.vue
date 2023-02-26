@@ -2,7 +2,7 @@
     <div class="px-1 md:px-2 lg:px-0 py-4 bg-sky-200 dark:bg-red-500">
         <div class="flex mx-auto max-w-7xl items-center justify-between">
             <router-link to="/" class="bg-sky-200 dark:bg-red-500">
-                <img class="h-10 w-auto" :src="'/logo/logo.png'" alt="ITC" />
+                <img class="h-10 w-auto" :src="'http://api.tranhung.info/logo/logo.png'" alt="ITC" />
             </router-link>
             <div class="flex gap-x-2">
                 <router-link to="/login" class="flex items-center group rounded-full bg-white max-h-9">

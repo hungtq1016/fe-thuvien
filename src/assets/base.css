@@ -1,3 +1,1 @@
-.router-link-exact-active.admin-route{
-    @apply text-sky-600 bg-sky-100
-}
+@import './base/route.css';
