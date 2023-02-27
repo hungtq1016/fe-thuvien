@@ -10,7 +10,7 @@
                         <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl">
                             {{section.title}}
                         </h2>
-                        <router-link :to="'/book?action='+section.slug"
+                        <router-link :to="{name:'BookListCategory',params:{id:1}}"
                             class="text-lg text-sky-500  hover:text-sky-600 dark:text-red-500 dark:hover:text-red-600">
                             Xem thêm</router-link>
                     </div>
@@ -44,7 +44,7 @@ export default {
     methods: {
         async fetchDataBook(payload) {
   
-        await axios.get(`${this.apiURL}/api/book?page=${this.page}&limit=${payload.limit}&slug=${payload.slug}`)
+        await axios.get(`${this.apiURL}/api/book?page=${this.page}&limit=${payload.limit}&slug=${payload.id}`)
           .then((response) => {
             this.dataBook = response.data.data
           })

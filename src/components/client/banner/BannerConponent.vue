@@ -23,10 +23,10 @@
             </svg>
             <div class="mx-auto max-w-7xl px-6 lg:px-8">
               <div class="mx-auto max-w-2xl lg:mx-0">
-                <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">{{title == undefined? 'Danh Sách Thể Loại' : title}}</h2>
-                <p class="mt-6 text-lg leading-8 text-gray-300" v-if="title !== undefined">Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua.</p>
+                <h2 class="text-4xl font-bold tracking-tight text-white sm:text-6xl">{{dataBooks == undefined? 'Danh Sách Thể Loại' : dataBooks.name}}</h2>
+                <p class="mt-6 text-lg leading-8 text-gray-300" v-if="dataBooks !== undefined">{{dataBooks.desc}}</p>
               </div>
-              <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none" v-if="title !== undefined">
+              <div class="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none" v-if="dataBooks !== undefined">
                 <div class="grid grid-cols-1 gap-y-6 gap-x-8 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
                   <button @click="sortArray(link.query)" v-for="link in links" :key="link.name"
                   class="text-left">{{ link.name }} <span aria-hidden="true">&rarr;</span></button>
@@ -44,8 +44,10 @@
     </section>
   </template>
 <script>
+import { mapState } from 'pinia';
+import { useBooksMenu } from '../../../stores/books';
+
     export default {
-        props:['title'],
         data(){
             return{
                 links:[
@@ -59,6 +61,9 @@
                     {name:'Đang mượn',value:22},
                 ]
             }
-        }
+        },
+        computed: {
+          ...mapState(useBooksMenu,['dataBooks'])
+        },
     }
 </script>

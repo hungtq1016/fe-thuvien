@@ -4,7 +4,7 @@
             {{ section.name }}
         </legend>
         <div class="space-y-3 pt-6">
-            <div v-for="option in options" :key="option.value"  class="flex items-center" >
+            <div v-for="(option,optionIdx) in options" :key="optionIdx"  class="flex items-center" >
                 <input :id="`${section.id}-${optionIdx}`" :name="`${section.id}[]`" :value="option.value" type="checkbox" class="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500" />
                 <label :for="`${section.id}-${optionIdx}`" class="ml-3 text-sm text-gray-600" >{{ option.label }}</label >
             </div>

@@ -9,7 +9,7 @@
 
         <div class="hidden lg:block">
             <div class="space-y-5 divide-y divide-gray-200">
-                <div v-for="(section, sectionIdx) in filters" :key="section.name" :class="sectionIdx === 0 ? null : 'pt-10'" >
+                <div v-for="(section, sectionIdx) in filters" :key="sectionIdx" >
                     <FilterItem :section="section" :options="section.options" />
                 </div>
             </div>
@@ -19,8 +19,9 @@
 
 <script>
 import FilterItem from './FilterItemComponent.vue'
+import { PlusIcon } from '@heroicons/vue/24/solid'
 export default {
-    components:{FilterItem},
+    components:{FilterItem,PlusIcon},
     data() {
         return {
             filters: [

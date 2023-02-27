@@ -16,7 +16,7 @@ const client = [
                 meta: { title: 'Danh Sách' }
             },
             {
-                path: 'book/:slug',
+                path: 'book/:id',
                 name: "BookDetail",
                 props: true,
                 component: () => import("@/views/Client/BookDetailView.vue"),
@@ -26,27 +26,33 @@ const client = [
                 path: 'category',
                 name: "CategoryList",
                 component: () => import("@/views/Client/MenuView.vue"),
-                meta: { title: 'category' }
+                meta: { title: 'Thể Loại' }
             },
             {
-                path: 'category/:slug',
+                path: 'category/:id',
                 name: "BookListCategory",
                 props: true,
                 component: () => import("@/views/Client/BookListView.vue"),
-                meta: { title: 'category' }
+                meta: { title: 'Thể Loại' }
             },
             {
-                path: 'poem',
-                name: "PoemList",
+                path: 'author',
+                name: "AuthorList",
                 component: () => import("@/views/Client/MenuView.vue"),
-                meta: { title: 'poem' }
+                meta: { title: 'Tác Giả' }
             },
             {
-                path: 'poem/:slug',
-                name: "RequestBook",
+                path: 'author/:id',
+                name: "BookListAuthor",
                 props: true,
-                component: () => import("@/views/Client/ListView.vue"),
-                meta: { title: 'poem' }
+                component: () => import("@/views/Client/BookListView.vue"),
+                meta: { title: 'Tác Giả' }
+            },
+            {
+                path: 'major',
+                name: "MajorList",
+                component: () => import("@/views/Client/MenuView.vue"),
+                meta: { title: 'Ngành Học' }
             },
         ],
         component: () => import("@/views/Client/ClientView.vue"),

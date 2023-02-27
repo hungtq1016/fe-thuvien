@@ -13,7 +13,7 @@
                 </svg>
             </button>
             <div class="flex-1">
-                <router-link :to="{name: 'BookDetail', params: { slug: this.book.slug }}" class="mt-2 block">
+                <router-link :to="{name: 'BookDetail', params: { id: this.book.id }}" class="mt-2 block">
                     <p class="text-xl font-semibold text-sky-700 dark:text-red-600" >
                         {{ this.book.name }}
                     </p>
@@ -22,7 +22,7 @@
                     </p>
                 </router-link>
                 <div class="flex gap-1 flex-wrap">
-                    <router-link v-for="category in this.book.categories" :key="category.id" :to="{name: 'BookListCategory', params: { slug: category.slug }}"
+                    <router-link v-for="category in this.book.categories" :key="category.id" :to="{name: 'BookListCategory', params: { id: category.id }}"
                         class="text-sm text-gray-400 dark:text-gray-100 font-semibold book-category-route">
                             {{ category.name }}
                     </router-link>

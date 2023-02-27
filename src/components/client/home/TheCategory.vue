@@ -10,7 +10,7 @@
                         <h2 class="text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100 sm:text-4xl ">
                             {{category.name}}
                         </h2>
-                        <router-link :to="{name: 'BookListCategory', params: { slug: category.slug }}"
+                        <router-link :to="{name: 'BookListCategory', params: { id: category.id }}"
                             class="text-lg text-sky-500  hover:text-sky-600 dark:text-red-500 dark:hover:text-red-600">
                             Xem thêm</router-link>
                     </div>

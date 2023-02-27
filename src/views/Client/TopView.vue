@@ -1,14 +1,14 @@
 <template>
     <div class="bg-white dark:bg-black">
         <TheRecommend/>
-        <TheSection v-for="item in section" :key="item.slug" :section="item"/>
+        <TheSection v-for="item in section" :key="item.id" :section="item"/>
         <div class="bg-sky-200 dark:bg-red-600">
             <div class="max-w-7xl mx-auto py-4 text-center ">
                 <h1 class="text-4xl font-bold leading-[52px] text-white dark:text-gray-200">Theo thể loại</h1>
             </div>
         </div>
 
-        <TheCategory v-for="category in categories" :key="category.slug" :category="category"/>
+        <TheCategory v-for="category in categories" :key="category.id" :category="category"/>
     </div>
 </template>
 
@@ -28,25 +28,25 @@
                     {
                         title:'Xem Nhiều',
                         desc:'Tài liệu được mượn nhiều nhất trong tất cả thời gian',
-                        slug:'hot',
+                        id:'hot',
                         limit:4
                     },
                     {
                         title:'Mới Nhất',
                         desc:'Tài liệu mới được thêm vào',
-                        slug:'new',
+                        id:'new',
                         limit:4
                     },
                     {
                         title:'Top tháng',
                         desc:'Được mượn nhiều nhất trong tháng vừa qua',
-                        slug:'monthly',
+                        id:'monthly',
                         limit:4
                     },
                     {
                         title:'Theo Ngành',
                         desc:'Tài liệu chuyên ngành',
-                        slug:'major',
+                        id:'major',
                         limit:4
                     },
                 ],
