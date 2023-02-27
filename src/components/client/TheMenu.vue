@@ -1,16 +1,15 @@
 <template>
     <!-- <BannerConponent/> -->
-    <GridWithoutFilter :key="this.resource"/>
+    <GridWithoutFilter :key="this.resource" />
 </template>
 
 <script>
-import BannerConponent from '@/components/client/banner/BannerConponent.vue'
 import GridWithoutFilter from '@/components/client/GridWithoutFilterComponent.vue'
 import { mapActions, mapState } from 'pinia';
 import { useMenuStore } from '@/stores/menu';
 
     export default {
-      components: { BannerConponent ,GridWithoutFilter},
+      components: { GridWithoutFilter},
       data() {
         return {
           resource : this.$route.path.split('/').slice(-1)[0]

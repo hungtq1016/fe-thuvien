@@ -18,7 +18,7 @@
     import TheCategory from "@/components/client/home/TheCategory.vue";
     import axios from "axios";
     import { mapState } from "pinia";
-    import { useLoadingStore } from "../../stores/loading";
+    import { useLoadingStore } from "@/stores/loading";
 
     export default {
         components: { TheRecommend,TheSection,TheCategory},

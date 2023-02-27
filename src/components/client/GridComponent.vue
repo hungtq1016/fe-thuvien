@@ -8,13 +8,13 @@
 </template>
 
 <script>
-import { useBooksMenu } from '../../stores/books';
+import { useBookStore } from '../../stores/book';
 import VerticalItem from './item/VerticalItem.vue'
 import { mapState } from 'pinia'
     export default {
         components:{VerticalItem},
         computed: {
-          ...mapState(useBooksMenu,['dataBooks'])
+          ...mapState(useBookStore,['dataBooks'])
         },
     }
 </script>

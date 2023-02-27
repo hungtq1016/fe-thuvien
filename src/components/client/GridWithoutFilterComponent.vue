@@ -9,7 +9,7 @@
           <div class="-my-2">
             <div class="box-content py-2 ">
               <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-2 md:gap-x-4 md:gap-y-6">
-                <router-link :to="{ name: 'BookListCategory', params: { id: item.id }}"
+                <router-link :to="this.resource+'/'+item.id"
                 v-for="item in this.dataMenu" :key="item.name"
                 class="relative overflow-hidden rounded-lg hover:opacity-75 h-full min-h-[100px]">
                     <img :src="item.image.path" alt="" class="h-full w-full object-cover object-center" v-if="item.image"/>
@@ -25,11 +25,12 @@
   </template>
   <script>
 import { mapState } from 'pinia';
-import { useMenuStore } from '../../stores/menu';
+import { useMenuStore } from '@/stores/menu';
 
     export default {
       computed: {
-        ...mapState(useMenuStore,['dataMenu'])
+        ...mapState(useMenuStore,['dataMenu','resource']),
+
       },
     }
   </script>

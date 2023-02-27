@@ -30,7 +30,7 @@
                             Tra Cứu
                         </div>
                         <div class="mt-4 text-base font-bold md:mt-4 md:text-2xl">\\ Xem sách đã mượn tại đây //</div>
-                        <router-link to="/">
+                        <router-link to="/loan">
                             <div class="flex justify-center py-2">
                                 <div class="flex text-3xl items-center gap-x-2">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-8 h-8">
@@ -50,7 +50,6 @@
 </template>
 
 <script>
-import HorizontalItem from '../item/HorizontalItem.vue';
 export default {
     data() {
         return {
@@ -94,7 +93,6 @@ export default {
             ]
         }
     },
-    components: { HorizontalItem }
 }
 </script>
 

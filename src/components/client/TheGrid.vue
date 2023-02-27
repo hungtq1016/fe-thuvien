@@ -17,7 +17,7 @@ import BannerConponent from "@/components/client/banner/BannerConponent.vue";
 import GridComponent from "@/components/client/GridComponent.vue";
 import FilterComponent from "@/components/client/FilterComponent.vue";
 import {mapActions,mapState} from 'pinia';
-import {useBooksMenu} from '@/stores/books'
+import {useBookStore} from '@/stores/book'
 export default {
     components: { BannerConponent,GridComponent,FilterComponent},
     data() {
@@ -28,13 +28,13 @@ export default {
     },
   
     methods: {
-      ...mapActions(useBooksMenu,['fetchDataBooks'])
+      ...mapActions(useBookStore,['fetchDataBooks']),
     },
     mounted(){
       this.fetchDataBooks({resource:this.resource,id:this.id})
     },
     computed: {
-      ...mapState(useBooksMenu,['dataBooks'])
+      ...mapState(useBookStore,['dataBooks']),
     },
 };
 </script>

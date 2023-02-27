@@ -48,7 +48,7 @@
                     </PopoverButton>
                 </div>
                 <PopoverGroup as="nav" class="hidden md:flex">
-                    <div v-for="item in navItems" :key="item.label"
+                    <div v-for="item in navItems" :key="item.label" @click="setResource(item.link.split('/')[0])"
                         class="border-b-2 py-2 px-5 client-route duration-500 nav">
                         <router-link :to="item.link" class="dropdown-route">
                             <Popover class="relative" v-slot="{ open }" v-if="item.subNav != null">
@@ -196,6 +196,8 @@ import { Popover, PopoverButton, PopoverGroup, PopoverPanel, Switch } from '@hea
 import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { ArrowPathIcon, Bars3Icon, BookmarkSquareIcon, CalendarIcon, ChartBarIcon, CursorArrowRaysIcon, LifebuoyIcon, PhoneIcon, PlayIcon, ShieldCheckIcon, Squares2X2Icon, XMarkIcon, } from '@heroicons/vue/24/outline'
 import { useDark, useToggle } from '@vueuse/core';
+import { mapActions } from 'pinia';
+import { useLoadingStore } from '../../../stores/loading';
 
 export default {
     data() {
@@ -261,7 +263,8 @@ export default {
             ]
         }
     },
-    computed: {
+    methods: {
+        ...mapActions(useLoadingStore,['setResource'])
     },
 }
 </script>

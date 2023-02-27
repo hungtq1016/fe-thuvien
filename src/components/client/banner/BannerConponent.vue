@@ -45,7 +45,7 @@
   </template>
 <script>
 import { mapState } from 'pinia';
-import { useBooksMenu } from '../../../stores/books';
+import { useBookStore } from '@/stores/book';
 
     export default {
         data(){
@@ -63,7 +63,7 @@ import { useBooksMenu } from '../../../stores/books';
             }
         },
         computed: {
-          ...mapState(useBooksMenu,['dataBooks'])
+          ...mapState(useBookStore,['dataBooks'])
         },
     }
 </script>

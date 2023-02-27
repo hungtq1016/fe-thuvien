@@ -54,6 +54,18 @@ const client = [
                 component: () => import("@/views/Client/MenuView.vue"),
                 meta: { title: 'Ngành Học' }
             },
+            {
+                path: 'major/:id',
+                name: "BookListMajor",
+                component: () => import("@/views/Client/BookListView.vue"),
+                meta: { title: 'Ngành Học' }
+            },
+            {
+                path: 'loan',
+                name: "LoanBook",
+                component: () => import("@/views/Client/LoanView.vue"),
+                meta: { title: 'Mượn Sách' }
+            },
         ],
         component: () => import("@/views/Client/ClientView.vue"),
     },

@@ -2,11 +2,10 @@ import axios from 'axios';
 import { defineStore } from 'pinia'
 import { useLoadingStore } from './loading'
 
-export const useBooksMenu = defineStore('books',{
+export const useBookStore = defineStore('book',{
   state: () => ({
     dataBooks: [],
     book: {},
-
     limit: 10,
     page: 1,
     loading: useLoadingStore(),
@@ -15,7 +14,6 @@ export const useBooksMenu = defineStore('books',{
   actions: {
     async fetchDataBooks(payload) {
         const url = this.loading.apiURL;
-  
         await axios.get(`${url}/api/${payload.resource}/${payload.id}`)
           .then((response) => {
             this.dataBooks = response.data.data
@@ -27,7 +25,6 @@ export const useBooksMenu = defineStore('books',{
 
       await axios.get(`${url}/api/book/${payload.id}`)
         .then((response) => {
-          console.log(response);
           this.book = response.data.data
         })
   },
