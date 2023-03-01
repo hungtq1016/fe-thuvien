@@ -11,9 +11,7 @@ export const useDataStore = defineStore('data',{
       table : useTableStore(),
   }),
 
-  getters: {
-    
-  },
+ 
   actions:{
     getItem(value){
       this.itemSelected = value

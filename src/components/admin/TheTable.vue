@@ -45,6 +45,29 @@
                                     {{ email }}
                                 </span>
                             </template>
+                            <template #item-loans="{ loans }">
+                                <div class="flex gap-x-2">
+                                    <div v-for="loan in loans" :key="loan.id">
+                                        {{loan.book_id}}
+                                    </div>
+                                </div>
+                            </template>
+                            <template #item-detail="{ loans }">
+                                <div class="flex gap-x-2">
+                                    <div v-for="loan in loans" :key="loan.id">
+                                        {{loan.loan_id}}
+                                    </div>
+                                </div>
+                            </template>
+                            <template #item-role="{ role }">
+                                {{ role.name }}
+                            </template>
+                            <template #item-option>
+                                <select  id="" class="py-1 my-2 rounded-lg text-sm md:text-base">
+                                    <option value="">Xác Nhận Trả</option>
+                                    <option value="">Báo Mất</option>
+                                </select>
+                            </template>
                             <template #item-status="item">
                                 <span v-if="item.role">
                                     {{ item.role.name }}
@@ -83,11 +106,11 @@ import { useDataStore } from '@/stores/data';
 
 export default {
     components: { PencilIcon, TrashIcon, PaginateComponent },
+    props:['label'],
     data() {
         return {
             searchField: "name",
             searchValue: "",
-            label: [ { value: "id", text: "ID", sortable: true }, { value: "name", text: "Tên", sortable: true }, { value: "image", text: "Hình ảnh", sortable: true }, { value: "desc", text: "Thông tin", sortable: true, width: 300, }, { value: "status", text: "Trạng thái", sortable: true }, { value: "operation", text: "Tùy Chỉnh" }, ],
             itemsSelected: []
         };
     },

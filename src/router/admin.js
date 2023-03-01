@@ -60,7 +60,7 @@ const admin = [
                 path: 'user',
                 name: "AdminUser",
                 meta: { title: 'Người Dùng' },
-                component: () => import("../views/Admin/TableView.vue"),
+                component: () => import("../views/Admin/LoanView.vue"),
             },
             {
                 path: 'role',
@@ -95,8 +95,10 @@ function isAuthenticated() {
     // const token = localStorage.getItem('token-admin');
     const token = window.$cookies.isKey("ltoken");
     if (token) {
+        console.log('true');
         return true;
     }
+    console.log('false');
     return false
 }
 
@@ -105,6 +107,7 @@ function hasPermissionsAdmin() {
     const isAdmin = window.btoa(today.getMonth() + "admin");
     const token = window.$cookies.isKey(isAdmin);
     if (token) {
+        console.log('true');
         return true;
     }
     return false

@@ -26,11 +26,12 @@
   <script>
 import { mapState } from 'pinia';
 import { useMenuStore } from '@/stores/menu';
+import { useLoadingStore } from '../../stores/loading';
 
     export default {
       computed: {
-        ...mapState(useMenuStore,['dataMenu','resource']),
-
+        ...mapState(useMenuStore,['dataMenu']),
+        ...mapState(useLoadingStore,['resource'])
       },
     }
   </script>

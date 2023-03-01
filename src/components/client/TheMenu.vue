@@ -7,6 +7,7 @@
 import GridWithoutFilter from '@/components/client/GridWithoutFilterComponent.vue'
 import { mapActions, mapState } from 'pinia';
 import { useMenuStore } from '@/stores/menu';
+import { useLoadingStore } from '@/stores/loading';
 
     export default {
       components: { GridWithoutFilter},
@@ -16,10 +17,12 @@ import { useMenuStore } from '@/stores/menu';
         }
       },
       methods: {
-        ...mapActions(useMenuStore,['fetchDataMenu'])
+        ...mapActions(useMenuStore,['fetchDataMenu']),
+        ...mapActions(useLoadingStore,['setResource'])
       },
       mounted () {
         this.fetchDataMenu({resource:this.resource});
+        this.setResource(this.resource)
       },
       computed:{
         ...mapState(useMenuStore,['dataMenu'])

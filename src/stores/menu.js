@@ -7,14 +7,11 @@ export const useMenuStore = defineStore('menu',{
     dataMenu: [],
     limit: 10,
     page: 1,
-    resource:null,
     loading: useLoadingStore(),
   }),
 
   actions: {
-    setResource(val){
-      this.resource = val
-    },
+
     async fetchDataMenu(payload) {
         const url = this.loading.apiURL;
   
