@@ -13,12 +13,10 @@
 </template>
 
 <script>
-import TheHeader from "../../components/client/include/TheHeader.vue";
-import TheFooter from '../../components/client/include/TheFooter.vue';
+import TheHeader from "@/components/client/include/TheHeader.vue";
+import TheFooter from '@/components/client/include/TheFooter.vue';
 
 import { ref } from 'vue';
-import { mapActions } from "pinia";
-import { useLoadingStore } from "../../stores/loading";
 
 export default {
   components: {
@@ -39,12 +37,6 @@ export default {
       content,
       scrollToTop
     };
-  },
-  methods: {
-    ...mapActions(useLoadingStore,['setUser']),
-  },
-  mounted () {
-    // this.setUser(this.$cookies.get('info_user')) ;
   },
 };
 </script>
