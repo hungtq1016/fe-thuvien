@@ -12,7 +12,7 @@ const client = [
                 path: 'book',
                 name: "BookList",
                 props: true,
-                component: () => import("@/views/Client/ListView.vue"),
+                component: () => import("@/views/Client/BookListView.vue"),
                 meta: { title: 'Danh Sách' }
             },
             {

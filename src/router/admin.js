@@ -95,7 +95,6 @@ function isAuthenticated() {
     // const token = localStorage.getItem('token-admin');
     const token = window.$cookies.isKey("ltoken");
     if (token) {
-        console.log('true');
         return true;
     }
     console.log('false');
@@ -107,7 +106,6 @@ function hasPermissionsAdmin() {
     const isAdmin = window.btoa(today.getMonth() + "admin");
     const token = window.$cookies.isKey(isAdmin);
     if (token) {
-        console.log('true');
         return true;
     }
     return false
