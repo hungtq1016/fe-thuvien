@@ -17,8 +17,7 @@
             { value: "id", text: "ID", sortable: true }, 
             { value: "name", text: "Tên", sortable: true }, 
             { value: "email", text: "Email", sortable: true }, 
-            { value: "loans", text: "Sách đã mượn", sortable: true }, 
-            { value: "detail", text: "Trạng Thái", sortable: true }, 
+            { value: "loans", text: "Trạng Thái Mượn", sortable: true }, 
             { value: "role", text: "Quyền", sortable: true }, 
             { value: "option", text: "Chỉnh" }, ],
 

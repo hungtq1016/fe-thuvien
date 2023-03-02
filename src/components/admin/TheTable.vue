@@ -45,20 +45,11 @@
                                     {{ email }}
                                 </span>
                             </template>
-                            <template #item-loans="{ loans }">
-                                <div class="flex gap-x-2">
-                                    <div v-for="loan in loans" :key="loan.id">
-                                        {{loan.book_id}}
-                                    </div>
-                                </div>
+                            <template #item-loans="item">
+                                <button class="block w-24 py-2 px-3 text-center rounded-lg text-gray-100"
+                                :class="bgColor(item.loans)" @click="openBook(item)">{{ textBtn(item.loans) }}</button>
                             </template>
-                            <template #item-detail="{ loans }">
-                                <div class="flex gap-x-2">
-                                    <div v-for="loan in loans" :key="loan.id">
-                                        {{loan.loan_id}}
-                                    </div>
-                                </div>
-                            </template>
+
                             <template #item-role="{ role }">
                                 {{ role.name }}
                             </template>
@@ -127,10 +118,27 @@ export default {
             this.toggleOpen(true)
             this.getItem(item)
         },
+        openBook(item){
+            this.toggleOpen(true)
+            this.getItem(item)
+            console.log(item);
+        },
+        bgColor(loans){
+            return loans.some(item => item.detail.name == 'Mất') ? 'bg-red-600' 
+            :loans.some(item => item.detail.name == 'Hết Hạn') ? 'bg-amber-600' 
+            :loans.some(item => item.detail.name == 'Đang Mượn') ? 'bg-sky-600' : 'bg-lime-600'
+
+        },
+        textBtn(loans){
+            return loans.some(item => item.detail.name == 'Mất') ? 'Mất' 
+            :loans.some(item => item.detail.name == 'Hết Hạn') ? 'Hết Hạn' 
+            :loans.some(item => item.detail.name == 'Đang Mượn') ? 'Đang Mượn' : 'Đã Trả'
+        }
     },
     computed: {
         ...mapState(useLoadingStore,['apiURL']),
         ...mapState(useTableStore,['dataTable','meta']),
+        
     },
 };
 </script>
