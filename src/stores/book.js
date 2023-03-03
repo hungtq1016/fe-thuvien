@@ -11,7 +11,8 @@ export const useBookStore = defineStore('book',{
     page: 1,
     loading: useLoadingStore(),
     user: useUserStore(),
-    favorite:false
+    isFavorite:false,
+    id_favorite:null
   }),
 
   actions: {
@@ -19,7 +20,9 @@ export const useBookStore = defineStore('book',{
       const url = this.loading.apiURL;
       await axios.get(`${url}/api/${payload.resource}/${payload.id}`)
         .then((response) => {
-          this.dataBooks = response.data.data
+          this.dataBooks = response.data.data,
+          this.isFavorite = false,
+          this.id_favorite = null
         })
     },
 
@@ -35,10 +38,17 @@ export const useBookStore = defineStore('book',{
     async fetchFavorite() {
       const url = this.loading.apiURL;
       const user = this.user.user;
-
+      if (!user) {
+        this.isFavorite = false;
+        return -1
+      }
       await axios.get(`${url}/api/favorite?user_id=${user.id}&book_id=${this.book.id}`)
         .then((response) => {
-          this.favorite = response.data
+          if (!response.data) {
+            return -1
+          }
+          this.id_favorite = response.data.id,
+          this.isFavorite = true
         })
         .catch(err=>console.log(err))
     },
@@ -52,11 +62,16 @@ export const useBookStore = defineStore('book',{
         alert('Can Dang Nhap De Thich Sach')
         return -1
       }
-      console.log(user.id+'id: '+this.book.id);
       await axios.post(`${url}/api/favorite`,{user_id:user.id,book_id:this.book.id},config)
-        .then((response) => {
-          console.log(response);
-        })
+      .then(()=>this.isFavorite=true)
+        .catch(err=>console.log(err))
+    },
+    async deleteFavorite(){
+      const url = this.loading.apiURL;
+      const config = this.loading.config;
+
+      await axios.delete(`${url}/api/favorite/${this.id_favorite}`,config)
+      .then(()=>this.isFavorite=false)
         .catch(err=>console.log(err))
     }
   }
