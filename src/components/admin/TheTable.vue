@@ -47,16 +47,22 @@
                             </template>
                             <template #item-loans="item">
                                 <button class="block w-24 py-2 px-3 text-center rounded-lg text-gray-100"
-                                :class="bgColor(item.loans)" @click="openBook(item)">{{ textBtn(item.loans) }}</button>
+                                 @click="openLoan(item,this.loan_id,false)">
+                                    <div :class="bgBtn(item.loans)" class="rounded-sm">
+                                        {{ textBtn(item.loans) }}
+                                    </div>
+                                </button>
                             </template>
 
                             <template #item-role="{ role }">
                                 {{ role.name }}
                             </template>
-                            <template #item-option>
-                                <select  id="" class="py-1 my-2 rounded-lg text-sm md:text-base">
-                                    <option value="">Xác Nhận Trả</option>
-                                    <option value="">Báo Mất</option>
+                            <template #item-option="item">
+                                <select  @change="openLoan(item,this.loan_id,true)" v-model="loan_id"
+                                class="py-1 my-2 border-gray-600 text-gray-600 bg-gray-100 rounded-lg text-sm md:text-base focus:ring-0 focus:border-sky-600">
+                                    <option :value="0" disabled>Chọn</option>
+                                    <option :value="2">Xác Nhận Trả</option>
+                                    <option :value="4">Báo Mất</option>
                                 </select>
                             </template>
                             <template #item-status="item">
@@ -102,7 +108,8 @@ export default {
         return {
             searchField: "name",
             searchValue: "",
-            itemsSelected: []
+            itemsSelected: [],
+            loan_id:0
         };
     },
     mounted() {
@@ -111,28 +118,29 @@ export default {
     methods: {
         ...mapActions(useLoadingStore,['toggleUpdate','toggleOpen']),
         ...mapActions(useTableStore,['fetchDataTable']),
-        ...mapActions(useDataStore,['patchStatusItem','deleteItem','getItem']),
+        ...mapActions(useDataStore,['patchStatusItem','deleteItem','getItem','getRequestLoan']),
 
         editRow(item){
             this.toggleUpdate(true)
             this.toggleOpen(true)
             this.getItem(item)
         },
-        openBook(item){
+        openLoan(item,request,update){
             this.toggleOpen(true)
+            this.toggleUpdate(update)
             this.getItem(item)
-            console.log(item);
-        },
-        bgColor(loans){
-            return loans.some(item => item.detail.name == 'Mất') ? 'bg-red-600' 
-            :loans.some(item => item.detail.name == 'Hết Hạn') ? 'bg-amber-600' 
-            :loans.some(item => item.detail.name == 'Đang Mượn') ? 'bg-sky-600' : 'bg-lime-600'
-
+            this.getRequestLoan(request)
+            this.loan_id = 0
         },
         textBtn(loans){
-            return loans.some(item => item.detail.name == 'Mất') ? 'Mất' 
-            :loans.some(item => item.detail.name == 'Hết Hạn') ? 'Hết Hạn' 
-            :loans.some(item => item.detail.name == 'Đang Mượn') ? 'Đang Mượn' : 'Đã Trả'
+            return loans.some(loan=>loan.detail.name=='Mất') ? 'Mất':
+            loans.some(loan=>loan.detail.name=='Hết Hạn') ? 'Hết Hạn':
+            loans.some(loan=>loan.detail.name=='Đang Mượn') ? 'Đang Mượn':'Đã Trả'
+        },
+        bgBtn(loans){
+            return loans.some(loan=>loan.detail.name=='Mất') ? 'bg-red-100 text-red-600 border-red-600':
+            loans.some(loan=>loan.detail.name=='Hết Hạn') ? 'bg-amber-100 text-amber-600 border-amber-600':
+            loans.some(loan=>loan.detail.name=='Đang Mượn') ? 'bg-sky-100 text-sky-600 border-sky-600':'bg-lime-100 text-lime-600 border-lime-600'
         }
     },
     computed: {

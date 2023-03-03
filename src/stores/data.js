@@ -7,6 +7,7 @@ import Swal from "sweetalert2";
 export const useDataStore = defineStore('data',{
   state: () => ({
       itemSelected:[],
+      putLoan:0,
       loading: useLoadingStore(),
       table : useTableStore(),
   }),
@@ -15,6 +16,9 @@ export const useDataStore = defineStore('data',{
   actions:{
     getItem(value){
       this.itemSelected = value
+    },
+    getRequestLoan(value){
+      this.putLoan = value
     },
 
     async postItem(item) {
@@ -81,6 +85,19 @@ export const useDataStore = defineStore('data',{
             })
         }
       })
+    },
+
+    async putStatusLoan(item) {
+
+      const url = this.loading.apiURL;
+      const config = this.loading.config;
+
+      await axios.put(`${url}/api/loan/${item.id}`,{loan_id:this.putLoan},config)
+      .then(()=>{
+        this.table.fetchDataTable()
+        Swal.fire( { title: 'Thành công!', text: 'Đổi trạng thái thành công', icon: 'success', confirmButtonText: 'Hoàn thành', } )
+      })
+      .catch(err=>console.log(err))
     },
   }
   

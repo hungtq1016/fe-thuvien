@@ -3,7 +3,7 @@ import VueCookies from 'vue-cookies'
 
 export const useLoadingStore = defineStore('loading',{
   state: () => ({
-      apiURL: 'http://localhost:8000',
+      apiURL: import.meta.env.VITE_URL,
       config : { headers: { 
         Authorization: `Bearer ${ VueCookies.get("ltoken")}`} },
       resource: null,

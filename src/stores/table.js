@@ -21,7 +21,9 @@ export const useTableStore = defineStore('table', {
     async fetchDataTable() {
       const url = this.loading.apiURL;
       const resource = this.loading.resource;
-
+      if (resource == '') {
+        return -1
+      }
       await axios.get(`${url}/api/${resource}?page=${this.page}&limit=${this.limit}`)
         .then((response) => {
           this.dataTable = response.data.data
@@ -29,6 +31,7 @@ export const useTableStore = defineStore('table', {
           this.meta = response.data.meta
 
       })
+      .catch(err=>console.log(err))
     },
 
 
