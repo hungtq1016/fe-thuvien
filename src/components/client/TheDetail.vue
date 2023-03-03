@@ -101,9 +101,9 @@
                          class="flex-auto px-6 py-2.5 bg-sky-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-sky-700 hover:shadow-lg focus:bg-sky-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-sky-800 active:shadow-lg transition duration-150 ease-in-out" >
                             Mượn Sách
                         </button>
-                        <button type="button" @click="this.fetchFavorite({user_id:1,book_id:1})"
+                        <button type="button" @click="this.postFavorite"
                         class="flex items-center justify-center rounded-md py-3 px-3 text-red-600 hover:bg-red-200 bg-red-100 hover:text-red-500 border border-red-600" >
-                            <HeartIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" />
+                            <HeartIcon class="h-6 w-6 flex-shrink-0" aria-hidden="true" v-if="!this.favorite"/>
                             <span class="sr-only">Add to favorites</span>
                         </button>
                     </div>
@@ -125,6 +125,7 @@ import { useBookStore } from '@/stores/book';
 import { useLoanStore } from '@/stores/loan';
 import TheComment from './Book/TheComment.vue';
 import TheImage from './Book/TheImage.vue';
+import { useUserStore } from '../../stores/user';
 
 export default {
     components: { CheckIcon, Disclosure, DisclosureButton, DisclosurePanel, HeartIcon, ChevronUpIcon, TheSection, TheComment, TheImage },
@@ -147,14 +148,16 @@ export default {
         }
     },
     methods: {
-        ...mapActions(useBookStore,['fetchBook','fetchFavorite']),
+        ...mapActions(useBookStore,['fetchBook','fetchFavorite','postFavorite']),
         ...mapActions(useLoanStore,['addToLoan'])
     },
     mounted () {
         this.fetchBook({id:this.$route.params.id});
+        !this.user ? '':this.fetchFavorite()
     },
     computed: {
-        ...mapState(useBookStore,['book']),
+        ...mapState(useBookStore,['book','favorite']),
+        ...mapState(useUserStore,['user']),
     },
 }
 </script>

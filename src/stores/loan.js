@@ -11,7 +11,10 @@ export const useLoanStore = defineStore('loan',{
     }),
   actions: {
     addToLoan(payload){
-
+        if (!this.user.user ) {
+            alert('Can Dang Nhap De Muon Sach')
+            return -1
+        }
         if (this.loans.length>0) {
             let item = this.loans.find(i => i.id === payload.id);
             if (item) {
@@ -36,7 +39,7 @@ export const useLoanStore = defineStore('loan',{
             return -1
         }
         checkStore.forEach(async i =>{
-            await axios.post(`${url}/api/loan`,{user_id:user.id,book_id:i.id},config).then(res=>console.log(res)).catch(err=>console.log(err))
+            await axios.post(`${url}/api/loan`,{user_id:user.id,book_id:i.id},config).catch(err=>console.log(err))
         })
         this.clearLoans();
         

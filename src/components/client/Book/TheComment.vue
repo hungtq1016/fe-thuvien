@@ -16,7 +16,7 @@
                         </p>
                     </div>
                     <p class="ml-2 text-sm text-gray-900">
-                        Trên {{ this.countComments }} đánh giá
+                        Trên {{ this.totalComment }} đánh giá
                     </p>
                 </div>
 
@@ -132,7 +132,7 @@ export default {
         ...mapState(useCommentStore,['comments']),
         ...mapState(useBookStore,['book']),
         ...mapState(useLoadingStore,['user']),
-        ...mapGetters(useCommentStore,['averageRating','countComments'])
+        ...mapGetters(useCommentStore,['averageRating','totalComment'])
     },
     mounted(){
         this.fetchComments({book_id:this.$route.params.id})

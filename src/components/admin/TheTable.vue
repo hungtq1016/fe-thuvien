@@ -59,7 +59,7 @@
                             </template>
                             <template #item-option="item">
                                 <select  @change="openLoan(item,this.loan_id,true)" v-model="loan_id"
-                                class="py-1 my-2 border-gray-600 text-gray-600 bg-gray-100 rounded-lg text-sm md:text-base focus:ring-0 focus:border-sky-600">
+                                class="py-1 my-2 border-gray-600 text-gray-600 bg-gray-100 rounded-lg text-sm focus:ring-0 focus:border-sky-600">
                                     <option :value="0" disabled>Chọn</option>
                                     <option :value="2">Xác Nhận Trả</option>
                                     <option :value="4">Báo Mất</option>

@@ -8,6 +8,7 @@ export const useCommentStore = defineStore('comment',{
     limit:5,
     page:1,
     book_id:null,
+    totalComment:0,
     loading: useLoadingStore(),
   }),
  getters: {
@@ -36,20 +37,11 @@ export const useCommentStore = defineStore('comment',{
     setBookId(val){
       this.book_id =val
     },
-    setCount(){
-      this.reviews.forEach((review) =>{ 
-        this.comments.forEach(comment =>{
-          console.log(123);
-            if (review.star == comment.rate) {
-              review.count++
-            }
-        })
-      })
-    },
       async fetchComments(payload) {
         const url = this.loading.apiURL;
         await axios.get(`${url}/api/comment?page=${this.page}&limit=${this.limit}&book_id=${payload.book_id}`)
           .then((response) => {
+            this.totalComment = response.data.meta.total
             this.comments = response.data.data
           })
     },

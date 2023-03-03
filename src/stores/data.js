@@ -96,6 +96,7 @@ export const useDataStore = defineStore('data',{
       .then(()=>{
         this.table.fetchDataTable()
         Swal.fire( { title: 'Thành công!', text: 'Đổi trạng thái thành công', icon: 'success', confirmButtonText: 'Hoàn thành', } )
+        this.loading.isModalOpen = false
       })
       .catch(err=>console.log(err))
     },
