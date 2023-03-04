@@ -1,5 +1,9 @@
 .router-link-exact-active.admin-route{
-    @apply text-sky-600 bg-sky-100
+    @apply text-sky-600 bg-sky-100 relative after:absolute after:content-[''] after:inset-y-0 after:-right-2 after:border after:border-sky-600
+}
+
+.admin-route:hover{
+    @apply  relative after:absolute after:content-[''] after:inset-y-0 after:-right-2 after:border after:border-sky-400
 }
 
 .book-category-route:not(:last-child){

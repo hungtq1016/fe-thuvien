@@ -61,7 +61,7 @@ export const useDataStore = defineStore('data',{
       const resource = this.loading.resource;
       const config = this.loading.config;
 
-      await axios.put(`${url}/api/${resource}/${item.id}/update`,{status:item.status},config)
+      await axios.patch (`${url}/api/${resource}/${item.id}/update`,{status:item.status},config)
       .then((res)=>{
         console.log(res);
         this.table.fetchDataTable()

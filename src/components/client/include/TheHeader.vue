@@ -33,42 +33,10 @@
                     </PopoverButton>
                 </div>
                 <PopoverGroup as="nav" class="hidden md:flex">
-                    <div v-for="item in navItems" :key="item.label" @click="setResource(item.link.split('/')[0])"
+                    <div v-for="item in navItems" :key="item.label" @click="setResource(item.resource)"
                         class="border-b-2 py-2 px-5 client-route duration-500 nav">
-                        <router-link :to="item.link" class="dropdown-route">
-                            <Popover class="relative" v-slot="{ open }" v-if="item.subNav != null">
-                                <PopoverButton
-                                    :class="[open ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-300 dark:hover:text-white', 'group inline-flex items-center rounded-md text-base font-semibold hover:text-gray-900 dark:hover:text-gray-300 focus:outline-none focus:ring-0']">
-                                    <span>{{ item.label }}</span>
-                                    <ChevronDownIcon
-                                        :class="[open ? 'text-gray-900 dark:text-white' : 'text-gray-500 dark:text-gray-300 dark:hover:text-white', 'ml-2 h-5 w-5 group-hover:text-gray-900 dark:group-hover:text-gray-300']"
-                                        aria-hidden="true" />
-                                </PopoverButton>
-
-                                <transition enter-active-class="transition ease-out duration-200" enter-from-class="opacity-0 translate-y-1" enter-to-class="opacity-100 translate-y-0" leave-active-class="transition ease-in duration-150" leave-from-class="opacity-100 translate-y-0" leave-to-class="opacity-0 translate-y-1">
-                                    <PopoverPanel class="absolute z-50 mt-3 w-36 transform px-2 sm:px-0 lg:left-1/2 lg:ml-0 lg:-translate-x-1/2">
-                                        <div class="overflow-hidden rounded-lg shadow-lg ring-1 ring-black ring-opacity-5">
-                                            <div class="relative grid gap-6 bg-white dark:bg-zinc-900 px-2 py-4 sm:p-4">
-                                                <router-link :to="item.link+'/'+subitem.id"
-                                                     v-for="subitem in item.subNav"
-                                                    :key="subitem.label"
-                                                    class="text-base font-medium subClient-route text-gray-900 dark:text-gray-300 -m-3 flex items-start rounded-lg p-3 hover:bg-gray-50 dark:hover:bg-gray-700 dark:hover:text-white sub-nav">{{
-                                                        subitem.label
-                                                    }}</router-link>
-
-                                            </div>
-                                            <span class="block bg-white dark:bg-gray-900">
-                                                <router-link :to="item.link"
-                                                    class="flow-root rounded-md p-3 transition duration-150 ease-in-out !bg-gray-100 dark:!bg-zinc-700 focus:outline-none focus-visible:ring focus-visible:ring-orange-500 focus-visible:ring-opacity-50">
-                                                    <span class="text-sm font-medium text-sky-600 dark:text-red-600">
-                                                        Xem thêm
-                                                    </span>
-                                                </router-link>
-                                            </span>
-                                        </div>
-                                    </PopoverPanel>
-                                </transition>
-                            </Popover>
+                        <router-link :to="'/'+item.resource" class="dropdown-route">
+                            <TheDropdown  v-if="item.dropdown" :item="item"/>
                             <span to="#" class="text-base font-semibold !bg-white dark:!bg-zinc-900 !text-gray-500 hover:!text-gray-900 dark:!text-gray-300 dark:hover:!text-white"
                                 v-else>{{ item.label }}</span>
                         </router-link>
@@ -178,7 +146,6 @@
 </template>
 <script>
 import { Popover, PopoverButton, PopoverGroup, PopoverPanel, Switch } from '@headlessui/vue'
-import { ChevronDownIcon } from '@heroicons/vue/20/solid'
 import { ArrowPathIcon, Bars3Icon, BookmarkSquareIcon, CalendarIcon, ChartBarIcon, CursorArrowRaysIcon, LifebuoyIcon, PhoneIcon, PlayIcon, ShieldCheckIcon, Squares2X2Icon, XMarkIcon, } from '@heroicons/vue/24/outline'
 import { useDark, useToggle } from '@vueuse/core';
 import { mapActions, mapState } from 'pinia';
@@ -186,6 +153,7 @@ import { useLoadingStore } from '@/stores/loading';
 import { useUserStore } from '@/stores/user';
 import TheLogin from './TheLogin.vue';
 import TheUser from './TheUser.vue';
+import TheDropdown from './TheDropdown.vue';
 
 export default {
     data() {
@@ -199,54 +167,30 @@ export default {
             navItems: [
                 {
                     label: "Trang Chủ",
-                    link: "/",
-                    subNav: null,
+                    resource: "",
+                    dropdown:false,
                 },
                 {
                     label: "Thể Loại",
-                    link: "/category",
-                    subNav: [
-                        {
-                            label: "Hành Động",
-                            id: "1"
-                        },
-                        {
-                            label: "Phiêu Lưu",
-                            id: "2"
-                        },
-                        {
-                            label: "Cách Mạng",
-                            id: "3"
-                        }
-                    ]
+                    resource: "category",
+                    name:"BookListCategory",
+                    dropdown: true
                 },
                 {
                     label: "Tác Giả",
-                    link: "/author",
-                    subNav: [
-                        {
-                            label: "Lục Bát",
-                            id: "4"
-                        },
-                        {
-                            label: "Hiện Đại",
-                            id: "5"
-                        },
-                        {
-                            label: "Cổ Điển",
-                            id: "6"
-                        }
-                    ]
+                    resource: "author",
+                    name:"BookListAuthor",
+                    dropdown: true
                 },
                 {
                     label: "Ngành Học",
-                    link: "/major",
-                    subNav: null
+                    resource: "major",
+                    dropdown:false
                 },
                 {
                     label: "Thông Tin",
-                    link: "about",
-                    subNav: null
+                    resource: "about",
+                    dropdown:false
                 }
             ]
         };
@@ -254,7 +198,7 @@ export default {
     methods: {
         ...mapActions(useLoadingStore, ["setResource"])
     },
-    components: { TheLogin ,TheUser },
+    components: { TheLogin, TheUser, TheDropdown },
     computed: {
         ...mapState(useUserStore,['user'])
     },

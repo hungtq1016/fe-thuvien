@@ -4,9 +4,15 @@ const client = [
         children:[
             {
                 path: '',
-                name: "home",
+                name: "HomePage",
                 component: () => import("@/views/Client/TopView.vue"),
                 meta: { title: 'Trang Chủ' }
+            },
+            {
+                path: 'about',
+                name: "About",
+                component: () => import("@/views/Page/AboutView.vue"),
+                meta: { title: 'Thông Tin Thêm' }
             },
             {
                 path: 'book',

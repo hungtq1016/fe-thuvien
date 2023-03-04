@@ -9,7 +9,8 @@
 </template>
 
 <script>
-import { BuildingOfficeIcon, BookOpenIcon, TagIcon,PhotoIcon, HomeIcon, ExclamationCircleIcon, UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon } from '@heroicons/vue/24/outline'
+import { BuildingOfficeIcon, BookOpenIcon, TagIcon,PhotoIcon, HomeIcon, ExclamationCircleIcon, 
+    UsersIcon, AcademicCapIcon , QueueListIcon, TableCellsIcon, LanguageIcon, NewspaperIcon ,Bars3BottomLeftIcon} from '@heroicons/vue/24/outline'
 import { mapActions} from 'pinia';
 import {useLoadingStore} from '@/stores/loading';
 import {useDataStore} from '@/stores/data';
@@ -30,6 +31,7 @@ export default {
                 { label: 'Nhà Xuất Bản', resource: 'publisher',name:'AdminPublisher' ,icon: BuildingOfficeIcon },
                 { label: 'Ngôn Ngữ', resource: 'language',name:'AdminLanguage' ,icon: LanguageIcon },
                 { label: 'Kho Hình', resource: 'image',name:'AdminImage' ,icon: PhotoIcon },
+                { label: 'Danh Mục', resource: 'menu',name:'AdminMenu' ,icon: Bars3BottomLeftIcon },
             ]
         }
     },

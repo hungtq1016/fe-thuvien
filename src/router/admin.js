@@ -86,6 +86,12 @@ const admin = [
                 meta: { title: 'Hình Ảnh' },
                 component: () => import("../views/Admin/ImageView.vue"),
             },
+            {
+                path: 'menu',
+                name: "AdminMenu",
+                meta: { title: 'Menu' },
+                component: () => import("../views/Admin/MenuView.vue"),
+            },
         ],
     },
     
