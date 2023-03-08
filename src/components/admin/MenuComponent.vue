@@ -2,9 +2,9 @@
     <div>
         <div class="text-2xl pb-4 ">{{this.title}}</div>
         <div class="grid grid-cols-5 gap-x-1 gap-y-2">
-            <label :for="item.id" v-for="item in this.expand ? data:data.slice(0,10)" :key="item.id"
+            <label :for="item.name+item.id" v-for="item in this.expand ? data:data.slice(0,10)" :key="item.id"
             class="flex items-center gap-x-1 checked:border">
-                <input type="checkbox" :id="item.id" class="focus:ring-0 focus:outline-none disabled:bg-red-100 disabled:border-red-600 rounded-full bg-lime-100 border-lime-600"
+                <input type="checkbox" :id="item.name+item.id" class="focus:ring-0 focus:outline-none disabled:bg-red-100 disabled:border-red-600 rounded-full bg-lime-100 border-lime-600"
                 :checked="item.isShow" :disabled="!item.isShow && this.totalChecked >=5" @click="patchMenu(item)">
                 <span class="truncate">{{item.name}}</span>
             </label>
